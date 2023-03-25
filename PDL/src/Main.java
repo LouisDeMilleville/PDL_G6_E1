@@ -3,7 +3,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		LoginWindow fenetreConnexion = new LoginWindow("EsigMeconnectais", 800, 800);
+		LoginWindow fenetreConnexion = new LoginWindow("EsigMeconnectais test commit", 800, 800);
 	}
 
 }
