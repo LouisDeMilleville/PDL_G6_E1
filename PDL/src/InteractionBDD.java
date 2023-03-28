@@ -65,6 +65,8 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Filiere : "+ filiere);
 					System.out.println("Annee : "+ annee);
+					
+					InterfaceEleve inter = new InterfaceEleve("Interface Eleve", 800, 800, new InteractionBDD());
 					//Ajouter création d'un objet Eleve
 				}
 				else {
