@@ -31,6 +31,16 @@ public class InteractionBDD {
 		}
 	}
 	
+	public DateEtHeure getDebutFermeture() { //Methode pour recup le debut d'une période de fermeture, à modifier
+		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		return debut_fermeture;
+	}
+	
+	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
+		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		return fin_fermeture;
+	}
+	
 	public boolean verificationConnexion(int type, String Identifiant, String MotDePasse) {
 		Connection con = null;
 		PreparedStatement ps = null;
