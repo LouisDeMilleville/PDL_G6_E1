@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
-	final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	//final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
 	// À utiliser si sur une machine personelle
-	//final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
+	final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
 	final static String LOGIN_BDD = "C##BDD6_7"; 
 	final static String PASS_BDD  = "BDD67";
 	private String identifiant;
