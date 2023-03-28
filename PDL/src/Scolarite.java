@@ -11,7 +11,6 @@ public class Scolarite extends Compte{
 		return true;
 	}
 	
-	public void setGestionnaire() {
-		return true;
+	public void setGestionnaire(Boolean estGestionnaire) {
 	}
 }	
