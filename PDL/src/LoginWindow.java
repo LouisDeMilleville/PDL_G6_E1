@@ -47,7 +47,7 @@ public class LoginWindow extends JFrame{
 		jtMotDePasse.setHorizontalAlignment(SwingConstants.CENTER);
 		jlContainer.add(jtMotDePasse);
 		
-		String[] choices = { "√âl√®ve", "Enseignant", "Scolarit√©" };
+		String[] choices = { "…lËve", "Enseignant", "ScolaritÈ" };
 		menu = new JComboBox<>(choices);
 		menu.addActionListener(e -> {
 	         // Obtention de l'indice du choix s√©lectionn√© dans le menu d√©roulant
@@ -73,17 +73,18 @@ public class LoginWindow extends JFrame{
 						verifId = moduleBDD.verificationConnexion(2, jtIdentifiant.getText(), jtMotDePasse.getText());
 						break;
 					default:
-						System.out.println("Normalement c'est pas cens√© arriver vu qu'il n'y a que 3 choix possibles mais eclipse va bouder si je le fais pas donc je pose ca l√†");
+						System.out.println("Normalement c'est pas censÈ arriver vu qu'il n'y a que 3 choix possibles mais eclipse va bouder si je le fais pas donc je pose ca l‡†");
 				}
 				
 				if(verifId == true)
 				{
 					System.out.println("Identifiants corrects !");
 					jlMessageBienvenue.setText("Identifiants corrects ! Connexion en cours...");
+					dispose();
 				}
 				else {
 					System.out.println("Bordel ca marche pas");
-					jlMessageBienvenue.setText("Identifiant ou mot de passe incorrect, v√©rifiez que vous avez s√©lectionn√© le bon type de compte");
+					jlMessageBienvenue.setText("Identifiant ou mot de passe incorrect, vÈrifiez que vous avez sÈlectionnÈ le bon type de compte");
 				}
 			}
 		});

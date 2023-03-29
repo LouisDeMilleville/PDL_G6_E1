@@ -6,16 +6,17 @@ import java.sql.ResultSet;
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
-	//final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
 	// À utiliser si sur une machine personelle
-	final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
+	//final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
 	final static String LOGIN_BDD = "C##BDD6_7"; 
 	final static String PASS_BDD  = "BDD67";
 	private String identifiant;
 	private String nom;
 	private String prenom;
 	private String mail;
+	private String mdp;
 	private String filiere;
 	private String numero;
 	private String matiere;
@@ -66,6 +67,7 @@ public class InteractionBDD {
 					nom = rs.getString("ele_nom");
 					prenom = rs.getString("ele_prenom");
 					mail = rs.getString("ele_mail");
+					mdp = rs.getString("ele_mdp");
 					filiere = rs.getString("ele_filiere");
 					annee = rs.getInt("ele_annee");
 					
@@ -73,10 +75,13 @@ public class InteractionBDD {
 					System.out.println("Nom : "+ nom);
 					System.out.println("Prenom : "+ prenom);
 					System.out.println("Mail : "+ mail);
+					System.out.println("Mdp : "+ mdp);
 					System.out.println("Filiere : "+ filiere);
 					System.out.println("Annee : "+ annee);
 					
-					InterfaceEleve inter = new InterfaceEleve("Interface Eleve", 800, 800, new InteractionBDD());
+					Etudiant etudiant = new Etudiant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, filiere, annee);
+					
+					InterfaceEleve inter = new InterfaceEleve("Interface Eleve", 800, 800, etudiant);
 					//Ajouter création d'un objet Eleve
 				}
 				else {
