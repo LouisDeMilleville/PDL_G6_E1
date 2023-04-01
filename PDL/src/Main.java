@@ -5,7 +5,7 @@ public class Main {
 		//Test commit
 		// TODO Auto-generated method stub
 
-		LoginWindow fenetreConnexion = new LoginWindow("EsigMeconnectai", 800, 800);
+		LoginWindow fenetreConnexion = new LoginWindow("EsigServices", 800, 800);
 	}
 
 }

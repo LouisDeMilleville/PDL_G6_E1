@@ -1,4 +1,6 @@
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -70,6 +72,17 @@ public class InterfaceEleve extends JFrame {
 		jbDeconnexion.setText("Deconnexion");
 		jbDeconnexion.setHorizontalAlignment(SwingConstants.CENTER);
 		jpContainer.add(jbDeconnexion);
+		
+		jbDeconnexion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				new LoginWindow("EsigServices", 800, 800);
+				
+			}
+		});
 		
 		//Ajouter verification dans table fermeture
 		

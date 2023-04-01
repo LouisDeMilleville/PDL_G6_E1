@@ -81,7 +81,7 @@ public class InteractionBDD {
 					
 					Etudiant etudiant = new Etudiant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, filiere, annee);
 					
-					InterfaceEleve inter = new InterfaceEleve("Interface Eleve", 800, 800, etudiant);
+					InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
 					//Ajouter création d'un objet Eleve
 				}
 				else {
@@ -145,7 +145,7 @@ public class InteractionBDD {
 					
 					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
 					
-					InterfaceEnseignant inter = new InterfaceEnseignant("Interface eseignant", 800, 800, enseignant);
+					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
 				}
 				else {
 					returnValue = false;
@@ -242,4 +242,6 @@ public class InteractionBDD {
 		
 		return returnValue;
 	}
+	
+
 }
