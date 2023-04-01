@@ -21,12 +21,14 @@ public class Etudiant extends Compte{
 		return filiere;
 	}
 	
-	public void setAnnee(String annee)
+	public void setAnnee(int annee)
 	{
+		this.annee = annee;
 	}
 	
-	public void setFiliere(int filiere)
+	public void setFiliere(String filiere)
 	{
+		this.filiere = filiere;
 	}
 	
 	

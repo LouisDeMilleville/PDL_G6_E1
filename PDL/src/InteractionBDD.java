@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
-	final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	//final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
 	// À utiliser si sur une machine personelle
-	//final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
+	final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
 	final static String LOGIN_BDD = "C##BDD6_7"; 
 	final static String PASS_BDD  = "BDD67";
 	private String identifiant;
@@ -131,8 +131,10 @@ public class InteractionBDD {
 					nom = rs.getString("ens_nom");
 					prenom = rs.getString("ens_prenom");
 					mail = rs.getString("ens_mail");
+					mdp = rs.getString("ens_mdp");
 					numero = rs.getString("ens_numero");
 					matiere = rs.getString("ens_matiere");
+				
 					
 					System.out.println("Identifiant : "+ identifiant);
 					System.out.println("Nom : "+ nom);
@@ -141,7 +143,9 @@ public class InteractionBDD {
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
 					
-					//Ajouter création d'un objet Enseignant
+					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
+					
+					InterfaceEnseignant inter = new InterfaceEnseignant("Interface eseignant", 800, 800, enseignant);
 				}
 				else {
 					returnValue = false;

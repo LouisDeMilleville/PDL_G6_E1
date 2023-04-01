@@ -17,6 +17,14 @@ public class Enseignant extends Compte{
 		}
 	}
 	
+	public Enseignant (int identifiant, String nom, String prenom, String mail, String mdp, String numero, String matiere_saisie)
+	{
+		super(identifiant, nom, prenom, mail,mdp);
+		this.numero=numero;
+		Matiere matiere = new Matiere(matiere_saisie, 10, 10, 10);
+		listeDesMatieres.add(matiere);
+	}
+	
 	public String getNumero()
 	{
 		return numero;
