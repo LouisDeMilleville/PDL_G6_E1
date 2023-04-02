@@ -104,8 +104,18 @@ public class InterfaceEnseignant extends JFrame {
 				// TODO Auto-generated method stub
 				new InterfaceSaisieAbsenceEnseignant("EsigServices", 800, 800, enseignant);
 				dispose();
+				
 			}
 		});
+		jbPlanning.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceMonPlanning("EsigServices", 800, 800, enseignant);
+				dispose();
+			}
+		}};
 	}
 
 }
