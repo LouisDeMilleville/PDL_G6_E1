@@ -115,7 +115,8 @@ public class InterfaceEnseignant extends JFrame {
 				new InterfaceMonPlanning("EsigServices", 800, 800, enseignant);
 				dispose();
 			}
-		}};
-	}
-
+		});
+		
 }
+}
+
