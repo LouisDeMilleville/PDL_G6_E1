@@ -84,6 +84,16 @@ public class InterfaceEleve extends JFrame {
 			}
 		});
 		
+		jbAbsencesDistanciel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceMenuAbsenceDistanciel("EsigServices", 800, 800, etudiant);
+				dispose();
+			}
+		});
+		
 		//Ajouter verification dans table fermeture
 		
 		this.setContentPane(jpContainer);
