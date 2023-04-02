@@ -105,6 +105,24 @@ public class InterfaceSaisieAbsenceDistanciel extends JFrame{
 			}
 		});
 		
+		jbValider.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				InteractionBDD moduleBDD = new InteractionBDD();
+				int idAbsence = moduleBDD.getCountAbsenceDistanciel();
+				idAbsence++;
+				int duree = Integer.parseInt(jtSaisieDuree.getText());
+				String raison = jtSaisieRaison.getText();
+				String matiere = jtSaisieMatiere.getText();
+				moduleBDD.insertAbsenceDistanciel(idAbsence, etudiant.getId(), duree, raison, 0, matiere);
+				jtSaisieDuree.setText("");
+				jtSaisieRaison.setText("");
+				jtSaisieMatiere.setText("");
+			}
+		});
+		
 		
 		this.setContentPane(jpContainer);
 		this.setLocationRelativeTo(null);

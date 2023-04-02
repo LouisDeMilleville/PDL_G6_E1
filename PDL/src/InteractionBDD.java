@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class InteractionBDD {
 
@@ -29,6 +30,63 @@ public class InteractionBDD {
 			Class.forName("oracle.jdbc.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
+		}
+	}
+	
+	public int getCountAbsenceDistanciel()
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+		try {
+			System.out.println("Recuperation nb absences dist dans la bdd...");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT COUNT(*) AS nb FROM AbsenceDistanciel");
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+				returnValue = rs.getInt("nb");
+			}
+			System.out.println("Il y a : "+ returnValue);
+			return returnValue;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public void insertAbsenceDistanciel(int idAbs, int idEle, int duree, String raison, int etat, String matiere)
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			System.out.println("Insertion dans la bdd...");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("INSERT INTO AbsenceDistanciel (abs_dist_id, abs_dist_id_eleve, abs_dist_duree, abs_dist_justif, abs_dist_etat_justif, abs_dist_matiere) VALUES (?, ?, ?, ?, ?, ?)");
+			System.out.println("Step 1");
+			ps.setInt(1, idAbs);
+			System.out.println("Step 2");
+			ps.setInt(2, idEle);
+			System.out.println("Step 3");
+			ps.setInt(3, duree);
+			System.out.println("Step 4");
+			ps.setString(4, raison);
+			System.out.println("Step 5");
+			ps.setInt(5, etat);
+			System.out.println("Step 6");
+			ps.setString(6, matiere);
+			System.out.println("Step 7");
+			rs = ps.executeQuery();
+			System.out.println("Valeur insérée");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
