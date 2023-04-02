@@ -52,6 +52,25 @@ public class InterfaceMenuAbsenceDistanciel extends JFrame {
 			}
 		});
 		
+		jbListeAbsences.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		jbSaisirAbsence.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceSaisieAbsenceDistanciel("EsigServices", 800, 800, etudiant);
+				dispose();
+			}
+		});
+		
 		this.setContentPane(jpContainer);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
