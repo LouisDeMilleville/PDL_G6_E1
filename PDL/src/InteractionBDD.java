@@ -2,6 +2,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class InteractionBDD {
 
@@ -247,6 +250,61 @@ public class InteractionBDD {
 		
 		return returnValue;
 	}
+	public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		//souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy 'at' hh:mm");
+		 DateEtHeure deh = absEnsei.getDebut();
+		 Date date= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee()+" 'at' "+deh.getHeure()+":"+deh.getMinute());
+		 java.sql.Date dates= new java.sql.Date(date.getTime());
+		 
+		 DateEtHeure deh2 = absEnsei.getFin();
+		 Date date2= sdf.parse(deh2.getJour()+"/"+deh2.getMois()+"/"+deh2.getAnnee()+" 'at' "+deh2.getHeure()+":"+deh2.getMinute());
+		 java.sql.Date dates2= new java.sql.Date(date2.getTime());
+		 
+		 ps = con.prepareStatement("INSERT INTO ABSENCEENSEIGNANT (  abs_ens_id, abs_ens_id_ens ,  abs_ens_debut, abs_ens_fin, abs_ens_raison  ) VALUES (?, ?, ?, ?)");
+		 ps.setInt(1, absEnsei.getIdAbs());
+		 ps.setInt(2, absEnsei.getIdEns());
+		 ps.setDate(3, dates);
+		 ps.setDate(4, dates2);
+		 ps.setString(5, absEnsei.getRaison());
+		 //ps.setDate(returnValue, null);
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
 	
 
 }

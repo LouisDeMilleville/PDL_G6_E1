@@ -28,6 +28,9 @@ public class InterfaceSaisieAbsenceEnseignant extends JFrame{
 	private String identifiant;
 	private DateEtHeure dateDebutAbs;
 	private DateEtHeure dateFinAbs;
+	private InteractionBDD moduleBDD;
+	
+	
 	
 	public InterfaceSaisieAbsenceEnseignant(String titre, int width, int height, Enseignant enseignant)
 	{
@@ -35,7 +38,7 @@ public class InterfaceSaisieAbsenceEnseignant extends JFrame{
 		this.setSize(width, height);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		
-		
+		moduleBDD = new InteractionBDD();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
 		jpContainer = new JPanel();
@@ -199,6 +202,8 @@ jbInsertionAbsence.addActionListener(new ActionListener() {
 		        
 		        
 				absEns.display();
+				
+				moduleBDD.addAbsenceEnseignant(absEns);
 			}
 			
 		});
