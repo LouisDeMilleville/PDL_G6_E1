@@ -142,10 +142,15 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
-					
 					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
 					
-					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
+					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant/*identifiant*/);
+					//public void addAbsence(int abs_ens_id,int identiant,DateEtHeure abs_ens_debut,DateEtHeure abs_ens_fin,String abs_ens_raison){
+				   //Recuperer l identifiant du professeur 
+					//Creer une id aleatoire a l absence
+					//Recuper les text de la date de debut , fin , raison
+					//Joindre au bouton inserer une absence
+				//}
 				}
 				else {
 					returnValue = false;

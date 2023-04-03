@@ -32,6 +32,15 @@ public class AbsenceEnseignant {
 		this.raison=raison;
 	}
 	
+	public void setIdAbs(int idAbs)
+	{
+		this.idAbs=idAbs;
+	}
+	public void setIdEns(int idEns)
+	{
+		this.idEns=idEns;
+	}
+	
 	public int getIdAbs()
 	{
 		return idAbs;
@@ -57,8 +66,9 @@ public class AbsenceEnseignant {
 		return raison;
 	}
 	
-	
-
+	public void display() {
+		System.out.println("L'absence durera du"+debut+ "au" +fin+  " et a pour id" +idAbs+ ".L'identifiant du professeur est" +idEns+ " et la raison de son absence est " +raison);
+	}
 }
 
 

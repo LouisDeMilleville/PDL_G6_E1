@@ -16,6 +16,27 @@ public class DateEtHeure {
 		this.minute=minute;
 	}
 	
+	public DateEtHeure( int annee, int mois , int jour)
+	{
+		this.annee=annee;
+		this.mois=mois;
+		this.jour=jour;
+		
+	}
+	public void setAnnee(int annee)
+	{
+		this.annee=annee;
+	}
+	public void setMois(int mois)
+	{
+		this.mois=mois;
+	}
+	public void setJour(int jour)
+	{
+		this.jour=jour;
+	}
+	
+	
 	public int getAnnee ()
 	{
 		return annee;

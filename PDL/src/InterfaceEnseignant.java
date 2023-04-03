@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,13 +23,15 @@ public class InterfaceEnseignant extends JFrame {
 	private JButton jbSaisieNotes;
 	private JButton jbDeconnexion;
 	private JButton jbMesAbsences;
+	private String idEnseignant;
 	
-	public InterfaceEnseignant(String titre, int width, int height, Enseignant enseignant)
+	public InterfaceEnseignant(String titre, int width, int height, Enseignant enseignant/*,String idEnseignant*/)
 	{
 		this.setTitle(titre);
 		this.setSize(width, height);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.enseignant = enseignant;
+		//this.idEnseignant=idEnseignant;
 		
 		jpContainer = new JPanel();
 		jpContainer.setLayout(new GridLayout(3, 1));

@@ -64,7 +64,8 @@ public class LoginWindow extends JFrame{
 				boolean verifId = false;
 				switch(selectedIndex) {
 					case 0:
-						verifId = moduleBDD.verificationConnexion(0, jtIdentifiant.getText(), jtMotDePasse.getText());
+						String id=jtIdentifiant.getText();
+						verifId = moduleBDD.verificationConnexion(0, id , jtMotDePasse.getText());
 						break;
 					case 1:
 						verifId = moduleBDD.verificationConnexion(1, jtIdentifiant.getText(), jtMotDePasse.getText());
