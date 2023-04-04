@@ -57,6 +57,8 @@ public class InterfaceMenuAbsenceDistanciel extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				new InterfaceAffichageAbsenceDistanciel("EsigServices", 800, 800, etudiant);
+				dispose();
 				
 			}
 		});
