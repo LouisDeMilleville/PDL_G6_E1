@@ -131,7 +131,7 @@ public class InterfaceSaisieAbsenceEnseignant extends JFrame{
 		jbRetour.setText("Retour");
 		jbRetour.setHorizontalAlignment(SwingConstants.CENTER);
 		jpContainerBoutons.add(jbRetour);
-		
+		//
 		
 		
 		jbInsertionAbsence = new JButton();
