@@ -83,7 +83,6 @@ public class LoginWindow extends JFrame{
 					dispose();
 				}
 				else {
-					System.out.println("Bordel ca marche pas");
 					jlMessageBienvenue.setText("Identifiant ou mot de passe incorrect, verifiez que vous avez selectionne le bon type de compte");
 				}
 			}
