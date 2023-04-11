@@ -1,4 +1,3 @@
-
 public class DateEtHeure {
 
 	private int annee;
@@ -15,6 +14,27 @@ public class DateEtHeure {
 		this.heure=heure;
 		this.minute=minute;
 	}
+	
+	public DateEtHeure( int annee, int mois , int jour)
+	{
+		this.annee=annee;
+		this.mois=mois;
+		this.jour=jour;
+		
+	}
+	public void setAnnee(int annee)
+	{
+		this.annee=annee;
+	}
+	public void setMois(int mois)
+	{
+		this.mois=mois;
+	}
+	public void setJour(int jour)
+	{
+		this.jour=jour;
+	}
+	
 	
 	public int getAnnee ()
 	{
@@ -42,5 +62,4 @@ public class DateEtHeure {
 	}
 	
 }
-
 

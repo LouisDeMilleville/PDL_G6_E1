@@ -2,16 +2,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
+//>>>>>>> branch 'master' of https://github.com/LouisDeMilleville/PDL_G6_E1.git
 
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
-	final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	//final static String URL_BDD = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
 	// À utiliser si sur une machine personelle
-	//final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
+	final static String URL_BDD = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
 	final static String LOGIN_BDD = "C##BDD6_7"; 
 	final static String PASS_BDD  = "BDD67";
 	private String identifiant;
@@ -32,38 +36,6 @@ public class InteractionBDD {
 		} catch (ClassNotFoundException e) {
 			System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
 		}
-	}
-	
-	public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel(Etudiant etudiant)
-	{
-		ArrayList<AbsenceDistanciel> listAbs = new ArrayList<AbsenceDistanciel>();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			System.out.println("Recuperation des absences distanciel");
-			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
-			ps = con.prepareStatement("SELECT * FROM AbsenceDistanciel WHERE abs_dist_id_eleve = ?");
-			ps.setInt(1, etudiant.getId());
-			rs = ps.executeQuery();
-			while(rs.next())
-			{
-				int abs_dist_id = rs.getInt("abs_dist_id");
-				int abs_dist_id_eleve = rs.getInt("abs_dist_id_eleve");
-				int abs_dist_duree = rs.getInt("abs_dist_duree");
-				String abs_dist_justif = rs.getString("abs_dist_justif");
-				int abs_dist_etat_justif = rs.getInt("abs_dist_etat_justif");
-				String abs_dist_matiere = rs.getString("abs_dist_matiere");
-				AbsenceDistanciel absDist = new AbsenceDistanciel(abs_dist_id, abs_dist_id_eleve, abs_dist_duree, abs_dist_justif, abs_dist_etat_justif, abs_dist_matiere);
-				listAbs.add(absDist);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return listAbs;
 	}
 	
 	public int getCountAbsenceDistanciel()
@@ -101,14 +73,21 @@ public class InteractionBDD {
 			System.out.println("Insertion dans la bdd...");
 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
 			ps = con.prepareStatement("INSERT INTO AbsenceDistanciel (abs_dist_id, abs_dist_id_eleve, abs_dist_duree, abs_dist_justif, abs_dist_etat_justif, abs_dist_matiere) VALUES (?, ?, ?, ?, ?, ?)");
+			System.out.println("Step 1");
 			ps.setInt(1, idAbs);
+			System.out.println("Step 2");
 			ps.setInt(2, idEle);
+			System.out.println("Step 3");
 			ps.setInt(3, duree);
+			System.out.println("Step 4");
 			ps.setString(4, raison);
+			System.out.println("Step 5");
 			ps.setInt(5, etat);
+			System.out.println("Step 6");
 			ps.setString(6, matiere);
+			System.out.println("Step 7");
 			rs = ps.executeQuery();
-			System.out.println("Valeur inseree");
+			System.out.println("Valeur insérée");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -226,10 +205,15 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
-					
 					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
 					
-					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
+					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant/*identifiant*/);
+					//public void addAbsence(int abs_ens_id,int identiant,DateEtHeure abs_ens_debut,DateEtHeure abs_ens_fin,String abs_ens_raison){
+				   //Recuperer l identifiant du professeur 
+					//Creer une id aleatoire a l absence
+					//Recuper les text de la date de debut , fin , raison
+					//Joindre au bouton inserer une absence
+				//}
 				}
 				else {
 					returnValue = false;
@@ -326,6 +310,114 @@ public class InteractionBDD {
 		
 		return returnValue;
 	}
+	public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		//souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+		 DateEtHeure deh = absEnsei.getDebut();
+		 Date date= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee());
+		 java.sql.Date dates= new java.sql.Date(date.getTime());
+		 
+		 DateEtHeure deh2 = absEnsei.getFin();
+		 Date date2= sdf.parse(deh2.getJour()+"/"+deh2.getMois()+"/"+deh2.getAnnee());
+		 java.sql.Date dates2= new java.sql.Date(date2.getTime());
+		 
+		 ps = con.prepareStatement("INSERT INTO AbsenceEnseignant ( abs_ens_id, abs_ens_id_ens ,  abs_ens_debut, abs_ens_fin, abs_ens_raison  ) VALUES (?, ?, ?, ?,?)");
+		 ps.setInt(1, absEnsei.getIdAbs());
+		 ps.setInt(2, absEnsei.getIdEns());
+		 ps.setDate(3,dates );
+		 ps.setDate(4, dates2);
+		 ps.setString(5, absEnsei.getRaison());
+		
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
+	public int addJustificatifProf(Justificatifabsence justifProf) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		//souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+		 DateEtHeure deh = justifProf.getDateJustif();
+		 Date date= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee());
+		 java.sql.Date dates= new java.sql.Date(date.getTime());
+		 
+		 
+		 ps = con.prepareStatement("INSERT INTO Justificatif (just_id,just_date,just_type_justificatif,just_raison,just_nom_compte,just_prenom_compte) VALUES (?, ?, ?, ?,?,?)");
+		 ps.setInt(1, justifProf.getIdJustif());
+		 ps.setDate(2,dates );
+		 ps.setString(3, justifProf.getTypeJustificatif());
+		 ps.setString(4, justifProf.getRaison());
+		 ps.setString(5, justifProf.getNomAbsent());
+		 ps.setString(6,justifProf.getPrenomAbsent());
+		
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
 	
 
 }
