@@ -20,7 +20,7 @@ public class InterfaceEnseignant extends JFrame {
 	private JButton jbPlanning;
 	private JButton jbAppel;
 	private JButton jbDeclarationAbsence;
-	private JButton jbSaisieNotes;
+	private JButton jbMesJustifs;
 	private JButton jbDeconnexion;
 	private JButton jbMesAbsences;
 	private String idEnseignant;
@@ -69,10 +69,10 @@ public class InterfaceEnseignant extends JFrame {
 		jbMesAbsences.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbMesAbsences);
 		
-		jbSaisieNotes = new JButton();
-		jbSaisieNotes.setText("Consulter / saisir des notes");
-		jbSaisieNotes.setHorizontalAlignment(SwingConstants.CENTER);
-		jpSousContainer.add(jbSaisieNotes);
+		jbMesJustifs = new JButton();
+		jbMesJustifs.setText("Consulter mes justificatifs ");
+		jbMesJustifs.setHorizontalAlignment(SwingConstants.CENTER);
+		jpSousContainer.add(jbMesJustifs);
 		
 		jbDeconnexion = new JButton();
 		jbDeconnexion.setText("Deconnexion");
@@ -116,6 +116,15 @@ public class InterfaceEnseignant extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				new InterfaceMonPlanning("EsigServices", 800, 800, enseignant);
+				dispose();
+			}
+		});
+        jbMesJustifs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceConsulterMesJustificatifs("EsigServices", 800, 800, enseignant);
 				dispose();
 			}
 		});

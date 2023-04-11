@@ -222,7 +222,8 @@ public void actionPerformed(ActionEvent e) {
     date3.setJour(j2);
     date3.setMois(m2);
 	Justificatifabsence JustifProf= new Justificatifabsence (0,State,date3,"Raison",nom,prenom); 
-    JustifProf.setIdJustif(Integer.parseInt(jour+mois+annee+enseignant.getId()+6));
+    //ATTENTION CONTRAINTE D UNICITE
+	JustifProf.setIdJustif(Integer.parseInt(jour+mois+annee+enseignant.getId()+7));
     JustifProf.setRaison(jtSaisieRaison.getText());
     
     JustifProf.display();
