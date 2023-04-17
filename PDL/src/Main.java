@@ -2,10 +2,10 @@
 public class Main {
 
 	public static void main(String[] args) {
-		//Test commit
 		// TODO Auto-generated method stub
+		//Test
 
-		LoginWindow fenetreConnexion = new LoginWindow("EsigServices", 800, 400);
+		new InterfaceLogin("EsigServices").main(null);
 	}
 
 }
