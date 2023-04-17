@@ -5,7 +5,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		//Test
 
-		LoginWindow fenetreConnexion = new LoginWindow("EsigServices", 800, 400);
+		new InterfaceLogin("EsigServices").main(null);
 	}
 
 }

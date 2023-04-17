@@ -79,7 +79,7 @@ public class InterfaceEleve extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				new LoginWindow("EsigServices", 800, 800);
+				new InterfaceLogin("EsigServices").main(null);
 				
 			}
 		});
