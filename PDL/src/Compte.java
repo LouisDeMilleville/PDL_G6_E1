@@ -1,4 +1,3 @@
-
 public class Compte {
 
 	private int identifiant;
