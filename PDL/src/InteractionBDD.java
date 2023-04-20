@@ -2,12 +2,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.sql.SQLException;
-//>>>>>>> branch 'master' of https://github.com/LouisDeMilleville/PDL_G6_E1.git
 
 public class InteractionBDD {
 
@@ -36,6 +35,38 @@ public class InteractionBDD {
 		} catch (ClassNotFoundException e) {
 			System.err.println("Impossible de charger le pilote de BDD, ne pas oublier d'importer le fichier .jar dans le projet");
 		}
+	}
+	
+	public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel(Etudiant etudiant)
+	{
+		ArrayList<AbsenceDistanciel> listAbs = new ArrayList<AbsenceDistanciel>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			System.out.println("Recuperation des absences distanciel");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT * FROM AbsenceDistanciel WHERE abs_dist_id_eleve = ?");
+			ps.setInt(1, etudiant.getId());
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				int abs_dist_id = rs.getInt("abs_dist_id");
+				int abs_dist_id_eleve = rs.getInt("abs_dist_id_eleve");
+				int abs_dist_duree = rs.getInt("abs_dist_duree");
+				String abs_dist_justif = rs.getString("abs_dist_justif");
+				int abs_dist_etat_justif = rs.getInt("abs_dist_etat_justif");
+				String abs_dist_matiere = rs.getString("abs_dist_matiere");
+				AbsenceDistanciel absDist = new AbsenceDistanciel(abs_dist_id, abs_dist_id_eleve, abs_dist_duree, abs_dist_justif, abs_dist_etat_justif, abs_dist_matiere);
+				listAbs.add(absDist);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listAbs;
 	}
 	
 	public int getCountAbsenceDistanciel()
@@ -73,21 +104,14 @@ public class InteractionBDD {
 			System.out.println("Insertion dans la bdd...");
 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
 			ps = con.prepareStatement("INSERT INTO AbsenceDistanciel (abs_dist_id, abs_dist_id_eleve, abs_dist_duree, abs_dist_justif, abs_dist_etat_justif, abs_dist_matiere) VALUES (?, ?, ?, ?, ?, ?)");
-			System.out.println("Step 1");
 			ps.setInt(1, idAbs);
-			System.out.println("Step 2");
 			ps.setInt(2, idEle);
-			System.out.println("Step 3");
 			ps.setInt(3, duree);
-			System.out.println("Step 4");
 			ps.setString(4, raison);
-			System.out.println("Step 5");
 			ps.setInt(5, etat);
-			System.out.println("Step 6");
 			ps.setString(6, matiere);
-			System.out.println("Step 7");
 			rs = ps.executeQuery();
-			System.out.println("Valeur insérée");
+			System.out.println("Valeur inseree");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -205,15 +229,10 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
+					
 					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
 					
-					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant/*identifiant*/);
-					//public void addAbsence(int abs_ens_id,int identiant,DateEtHeure abs_ens_debut,DateEtHeure abs_ens_fin,String abs_ens_raison){
-				   //Recuperer l identifiant du professeur 
-					//Creer une id aleatoire a l absence
-					//Recuper les text de la date de debut , fin , raison
-					//Joindre au bouton inserer une absence
-				//}
+					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
 				}
 				else {
 					returnValue = false;
@@ -310,7 +329,8 @@ public class InteractionBDD {
 		
 		return returnValue;
 	}
-	public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
+  
+  public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
 		 int returnValue = 0;
@@ -365,7 +385,8 @@ public class InteractionBDD {
 		 }
 		 return returnValue;
 		 }
-	public int addJustificatifProf(Justificatifabsence justifProf) {
+     
+     public int addJustificatifProf(Justificatifabsence justifProf) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
 		 int returnValue = 0;

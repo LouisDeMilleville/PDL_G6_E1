@@ -1,4 +1,3 @@
-
 public class Cours {
 
 	private int num_cours;
@@ -87,5 +86,3 @@ public class Cours {
 	}
 
 }
-
-
