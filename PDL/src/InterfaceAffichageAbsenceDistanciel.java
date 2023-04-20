@@ -27,13 +27,13 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.etudiant = etudiant;
 		
-		//Recuperer le nombre d'absences pour définir la taille du layout
+		//Recuperer le nombre d'absences pour dï¿½finir la taille du layout
 		
 		listAbs = new ArrayList<AbsenceDistanciel>();
 		
 		moduleBDD = new InteractionBDD();
 		
-		listAbs = moduleBDD.getListAbsenceDistanciel(etudiant);
+		//listAbs = moduleBDD.getListAbsenceDistanciel(etudiant);
 		
 		jpContainer = new JPanel();
 		jpContainer.setLayout(new GridLayout(listAbs.size() + 2, 1));
