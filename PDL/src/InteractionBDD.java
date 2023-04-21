@@ -165,7 +165,8 @@ public class InteractionBDD {
 					
 					Etudiant etudiant = new Etudiant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, filiere, annee);
 					
-					InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
+					//InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
+					new EtudiantGUI().main(null);
 					//Ajouter création d'un objet Eleve
 				}
 				else {
