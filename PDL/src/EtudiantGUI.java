@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class EtudiantGUI {
 
@@ -16,11 +17,11 @@ public class EtudiantGUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args, Etudiant etudiant) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EtudiantGUI window = new EtudiantGUI();
+					EtudiantGUI window = new EtudiantGUI(etudiant);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +33,8 @@ public class EtudiantGUI {
 	/**
 	 * Create the application.
 	 */
-	public EtudiantGUI() {
+	public EtudiantGUI(Etudiant etudiant) {
+		this.etudiant = etudiant;
 		initialize();
 	}
 
@@ -48,10 +50,14 @@ public class EtudiantGUI {
 		
 		JLabel jlPrenom = new JLabel("New label");
 		jlPrenom.setBounds(28, 35, 246, 45);
+		jlPrenom.setText(etudiant.getPrenom());
+		jlPrenom.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(jlPrenom);
 		
 		JLabel jlNom = new JLabel("New label");
 		jlNom.setBounds(28, 90, 246, 39);
+		jlNom.setText(etudiant.getNom());
+		jlNom.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(jlNom);
 		
 		ImageIcon imageIcon = new ImageIcon("Images\\\\logo_esig.png");
@@ -71,41 +77,64 @@ public class EtudiantGUI {
 		
 		JLabel jlFermeture = new JLabel("Label Fermeture");
 		jlFermeture.setBounds(28, 139, 735, 52);
+		jlFermeture.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(jlFermeture);
 		
-		JLabel jlPlanning = new JLabel("Label Planning");
+		JButton jbPlanning = new JButton("Bouton Planning");
 		ImageIcon imagePlanning = new ImageIcon("Images\\\\bouton_planning.png");
 		Image imageP = imagePlanning.getImage();
-		jlPlanning.setBounds(28, 228, 259, 94);
-		int widthP = jlPlanning.getWidth();
-		int heightP = jlPlanning.getHeight();
+		jbPlanning.setBounds(28, 228, 259, 94);
+		int widthP = jbPlanning.getWidth() +10;
+		int heightP = jbPlanning.getHeight();
 		Image scaledImageP = imageP.getScaledInstance(widthP, heightP, Image.SCALE_SMOOTH);
-		jlPlanning.setIcon(new ImageIcon(scaledImageP));
-		System.out.println("Largeur : "+jlPlanning.getWidth());
-		System.out.println("Hauteur : "+jlPlanning.getHeight());
-		frame.getContentPane().add(jlPlanning);
+		jbPlanning.setIcon(new ImageIcon(scaledImageP));
+		System.out.println("Largeur : "+jbPlanning.getWidth());
+		System.out.println("Hauteur : "+jbPlanning.getHeight());
+		System.out.println("Largeur icon : "+ new ImageIcon(scaledImageP).getIconWidth());
+		System.out.println("Hauteur icon : "+ new ImageIcon(scaledImageP).getIconHeight());
+		frame.getContentPane().add(jbPlanning);
 		
-		JLabel jlNotes = new JLabel("Label Notes");
+		JButton jbNotes = new JButton("Label Notes");
 		ImageIcon imageNotes = new ImageIcon("Images\\\\bouton_notes.png");
 		Image imageN = imageNotes.getImage();
-		jlNotes.setBounds(28, 342, 259, 94);
-		int widthN = jlNotes.getWidth();
-		int heightN = jlNotes.getHeight();
+		jbNotes.setBounds(28, 342, 259, 94);
+		int widthN = jbNotes.getWidth() + 10;
+		int heightN = jbNotes.getHeight();
 		Image scaledImageN = imageN.getScaledInstance(widthN, heightN, Image.SCALE_SMOOTH);
-		jlNotes.setIcon(new ImageIcon(scaledImageN));
-		frame.getContentPane().add(jlNotes);
+		jbNotes.setIcon(new ImageIcon(scaledImageN));
+		frame.getContentPane().add(jbNotes);
 		
-		JLabel jlAbsenceNormale = new JLabel("Label Absences Normales");
-		jlAbsenceNormale.setBounds(339, 228, 259, 94);
-		frame.getContentPane().add(jlAbsenceNormale);
+		JButton jbAbsenceNormale = new JButton("Bouton Absences Normales");
+		ImageIcon imageAbsences = new ImageIcon("Images\\\\bouton_absences.png");
+		Image imageA = imageAbsences.getImage();
+		jbAbsenceNormale.setBounds(339, 228, 259, 94);
+		int widthA = jbAbsenceNormale.getWidth() +10;
+		int heightA = jbAbsenceNormale.getHeight();
+		Image scaledImageA = imageA.getScaledInstance(widthA, heightA, Image.SCALE_SMOOTH);
+		jbAbsenceNormale.setIcon(new ImageIcon(scaledImageA));
+		frame.getContentPane().add(jbAbsenceNormale);
 		
 		JButton jbAbsenceDistanciel = new JButton("Bouton Absences Distanciel");
+		ImageIcon imageDistanciel = new ImageIcon("Images\\\\bouton_distanciel.png");
+		Image imageD = imageDistanciel.getImage();
 		jbAbsenceDistanciel.setBounds(339, 342, 259, 94);
+		int widthD = jbAbsenceDistanciel.getWidth() +10;
+		int heightD = jbAbsenceDistanciel.getHeight();
+		Image scaledImageD = imageD.getScaledInstance(widthD, heightD, Image.SCALE_SMOOTH);
+		jbAbsenceDistanciel.setIcon(new ImageIcon(scaledImageD));
 		frame.getContentPane().add(jbAbsenceDistanciel);
 		
-		JLabel jlDeconnexion = new JLabel("Label Deconnexion");
-		jlDeconnexion.setBounds(634, 228, 129, 208);
-		frame.getContentPane().add(jlDeconnexion);
+		JButton jbDeconnexion = new JButton("Bouton Deconnexion");
+		jbDeconnexion.setBounds(634, 228, 129, 208);
+		ImageIcon imageQuitter = new ImageIcon("Images\\\\bouton_quitter.png");
+		Image imageQ = imageQuitter.getImage();
+		System.out.println("Largeur : "+jbDeconnexion.getWidth());
+		System.out.println("Hauteur : "+jbDeconnexion.getHeight());
+		int widthQ = jbDeconnexion.getWidth() +10;
+		int heightQ = jbDeconnexion.getHeight();
+		Image scaledImageQ = imageQ.getScaledInstance(widthQ, heightQ, Image.SCALE_SMOOTH);
+		jbDeconnexion.setIcon(new ImageIcon(scaledImageQ));
+		frame.getContentPane().add(jbDeconnexion);
 		
 		
 		jbAbsenceDistanciel.addActionListener(new ActionListener() {
@@ -114,6 +143,16 @@ public class EtudiantGUI {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				new InterfaceMenuAbsenceDistanciel("EsigServices", 800, 800, etudiant);
+				frame.dispose();
+			}
+		});
+		
+		jbDeconnexion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceLogin("EsigServices").main(null);
 				frame.dispose();
 			}
 		});

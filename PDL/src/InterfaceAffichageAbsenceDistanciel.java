@@ -27,7 +27,7 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.etudiant = etudiant;
 		
-		//Recuperer le nombre d'absences pour définir la taille du layout
+		//Recuperer le nombre d'absences pour dï¿½finir la taille du layout
 		
 		listAbs = new ArrayList<AbsenceDistanciel>();
 		
