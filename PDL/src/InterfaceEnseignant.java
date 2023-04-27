@@ -128,6 +128,16 @@ public class InterfaceEnseignant extends JFrame {
 				dispose();
 			}
 		});
+/* jbMesAbsences.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceConsulterMesAbsences("EsigServices", 800, 800, enseignant);
+				dispose();
+			}
+		});*/
+        
 		
 		
 		
