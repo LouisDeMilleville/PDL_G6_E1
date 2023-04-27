@@ -120,12 +120,12 @@ public class InteractionBDD {
 	}
 	
 	public DateEtHeure getDebutFermeture() { //Methode pour recup le debut d'une période de fermeture, à modifier
-		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
+		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
 		return debut_fermeture;
 	}
 	
 	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
-		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
+		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
 		return fin_fermeture;
 	}
 	
@@ -295,10 +295,7 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Est gestionnaire : "+ estGestionnaire);
 					
-					//Ajouter création d'un objet Responsable de la Scolarite 
-                    Scolarite gestionnaire = new Scolarite(Integer.parseInt(identifiant), nom, prenom, mail, mdp,estGestionnaire);
-					
-					InterfaceScolarite inter1 = new InterfaceScolarite("EsigServices", 800, 800, gestionnaire);
+					//Ajouter création d'un objet Enseignant
 				}
 				else {
 					returnValue = false;
@@ -515,4 +512,6 @@ public class InteractionBDD {
 		moduleBDD.addCours(c1);
  	}
  	*/
+	
+
 }

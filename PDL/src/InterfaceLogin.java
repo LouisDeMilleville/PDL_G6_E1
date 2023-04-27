@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -67,19 +69,23 @@ public class InterfaceLogin {
 		
 		textField = new JTextField();
 		textField.setBounds(313, 180, 146, 39);
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Identifiant");
 		lblNewLabel.setBounds(197, 186, 106, 33);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(313, 229, 146, 39);
+		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(passwordField);
 		
 		JLabel lblNewLabel_1 = new JLabel("Mot de passe");
 		lblNewLabel_1.setBounds(197, 242, 106, 26);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel_1);
 		
 		JButton btnNewButton = new JButton("Me connecter");
