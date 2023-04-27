@@ -33,7 +33,7 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 		
 		moduleBDD = new InteractionBDD();
 		
-		listAbs = moduleBDD.getListAbsenceDistanciel(etudiant);
+		//listAbs = moduleBDD.getListAbsenceDistanciel(etudiant);
 		
 		jpContainer = new JPanel();
 		jpContainer.setLayout(new GridLayout(listAbs.size() + 2, 1));

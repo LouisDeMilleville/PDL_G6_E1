@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,16 +20,18 @@ public class InterfaceEnseignant extends JFrame {
 	private JButton jbPlanning;
 	private JButton jbAppel;
 	private JButton jbDeclarationAbsence;
-	private JButton jbSaisieNotes;
+	private JButton jbMesJustifs;
 	private JButton jbDeconnexion;
 	private JButton jbMesAbsences;
+	private String idEnseignant;
 	
-	public InterfaceEnseignant(String titre, int width, int height, Enseignant enseignant)
+	public InterfaceEnseignant(String titre, int width, int height, Enseignant enseignant/*,String idEnseignant*/)
 	{
 		this.setTitle(titre);
 		this.setSize(width, height);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.enseignant = enseignant;
+		//this.idEnseignant=idEnseignant;
 		
 		jpContainer = new JPanel();
 		jpContainer.setLayout(new GridLayout(3, 1));
@@ -66,10 +69,10 @@ public class InterfaceEnseignant extends JFrame {
 		jbMesAbsences.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbMesAbsences);
 		
-		jbSaisieNotes = new JButton();
-		jbSaisieNotes.setText("Consulter / saisir des notes");
-		jbSaisieNotes.setHorizontalAlignment(SwingConstants.CENTER);
-		jpSousContainer.add(jbSaisieNotes);
+		jbMesJustifs = new JButton();
+		jbMesJustifs.setText("Consulter mes justificatifs ");
+		jbMesJustifs.setHorizontalAlignment(SwingConstants.CENTER);
+		jpSousContainer.add(jbMesJustifs);
 		
 		jbDeconnexion = new JButton();
 		jbDeconnexion.setText("Deconnexion");
@@ -104,8 +107,30 @@ public class InterfaceEnseignant extends JFrame {
 				// TODO Auto-generated method stub
 				new InterfaceSaisieAbsenceEnseignant("EsigServices", 800, 800, enseignant);
 				dispose();
+				
 			}
 		});
-	}
-
+		jbPlanning.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceMonPlanning("EsigServices", 800, 800, enseignant);
+				dispose();
+			}
+		});
+        jbMesJustifs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceConsulterMesJustificatifs("EsigServices", 800, 800, enseignant);
+				dispose();
+			}
+		});
+		
+		
+		
 }
+}
+

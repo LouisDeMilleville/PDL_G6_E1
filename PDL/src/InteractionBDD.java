@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class InteractionBDD {
 
@@ -165,8 +168,7 @@ public class InteractionBDD {
 					
 					Etudiant etudiant = new Etudiant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, filiere, annee);
 					
-					//InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
-					new EtudiantGUI(etudiant).main(null, etudiant);
+					InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
 					//Ajouter création d'un objet Eleve
 				}
 				else {
@@ -327,6 +329,116 @@ public class InteractionBDD {
 		
 		return returnValue;
 	}
+  
+  public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		//souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+		 DateEtHeure deh = absEnsei.getDebut();
+		 Date date= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee());
+		 java.sql.Date dates= new java.sql.Date(date.getTime());
+		 
+		 DateEtHeure deh2 = absEnsei.getFin();
+		 Date date2= sdf.parse(deh2.getJour()+"/"+deh2.getMois()+"/"+deh2.getAnnee());
+		 java.sql.Date dates2= new java.sql.Date(date2.getTime());
+		 
+		 ps = con.prepareStatement("INSERT INTO AbsenceEnseignant ( abs_ens_id, abs_ens_id_ens ,  abs_ens_debut, abs_ens_fin, abs_ens_raison  ) VALUES (?, ?, ?, ?,?)");
+		 ps.setInt(1, absEnsei.getIdAbs());
+		 ps.setInt(2, absEnsei.getIdEns());
+		 ps.setDate(3,dates );
+		 ps.setDate(4, dates2);
+		 ps.setString(5, absEnsei.getRaison());
+		
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
+     
+     public int addJustificatifProf(Justificatifabsence justifProf) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		//souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
+		 DateEtHeure deh = justifProf.getDateJustif();
+		 Date date= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee());
+		 java.sql.Date dates= new java.sql.Date(date.getTime());
+		 
+		 
+		 ps = con.prepareStatement("INSERT INTO Justificatif (just_id,just_date,just_type_justificatif,just_raison,just_nom_compte,just_prenom_compte) VALUES (?, ?, ?, ?,?,?)");
+		 ps.setInt(1, justifProf.getIdJustif());
+		 ps.setDate(2,dates );
+		 ps.setString(3, justifProf.getTypeJustificatif());
+		 ps.setString(4, justifProf.getRaison());
+		 ps.setString(5, justifProf.getNomAbsent());
+		 ps.setString(6,justifProf.getPrenomAbsent());
+		
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
 	
 
 }
