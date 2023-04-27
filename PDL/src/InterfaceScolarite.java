@@ -54,7 +54,7 @@ public class InterfaceScolarite extends JFrame {
 		jpSousContainer.add(jbGestionCours);
 		
 		jbGestionEleve = new JButton();
-		jbGestionEleve.setText("Gestion des élèves");
+		jbGestionEleve.setText("Gestion des ï¿½lï¿½ves");
 		jbGestionEleve.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionEleve);
 		
@@ -79,7 +79,7 @@ public class InterfaceScolarite extends JFrame {
 		jpSousContainer.add(jbGestionNote);
 		
 		jbGestionStatutEcole = new JButton();
-		jbGestionStatutEcole.setText("Gestion du statut de l'école");
+		jbGestionStatutEcole.setText("Gestion du statut de l'ecole");
 		jbGestionStatutEcole.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionStatutEcole);
 		
@@ -89,6 +89,32 @@ public class InterfaceScolarite extends JFrame {
 		jpSousContainer.add(jbDeconnexion);
 		
 		jpContainer.add(jpSousContainer);
+		
+	//Ajouter verification dans table fermeture
+		
+		this.setContentPane(jpContainer);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		
+		jbDeconnexion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				new LoginWindow("EsigServices", 800, 800);
+				
+			}
+		});
+        jbGestionCours.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceGestiondeCours("EsigServices", 800, 800, scolarite);
+				dispose();
+			}
+		});
 		
 		
 	}

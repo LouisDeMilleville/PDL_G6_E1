@@ -120,12 +120,12 @@ public class InteractionBDD {
 	}
 	
 	public DateEtHeure getDebutFermeture() { //Methode pour recup le debut d'une période de fermeture, à modifier
-		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return debut_fermeture;
 	}
 	
 	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
-		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return fin_fermeture;
 	}
 	
@@ -295,7 +295,10 @@ public class InteractionBDD {
 					System.out.println("Mail : "+ mail);
 					System.out.println("Est gestionnaire : "+ estGestionnaire);
 					
-					//Ajouter création d'un objet Enseignant
+					//Ajouter création d'un objet Responsable de la Scolarite 
+                    Scolarite gestionnaire = new Scolarite(Integer.parseInt(identifiant), nom, prenom, mail, mdp,estGestionnaire);
+					
+					InterfaceScolarite inter1 = new InterfaceScolarite("EsigServices", 800, 800, gestionnaire);
 				}
 				else {
 					returnValue = false;
@@ -439,6 +442,77 @@ public class InteractionBDD {
 		 }
 		 return returnValue;
 		 }
+     
+     //TODO MODIFIER LA METHODE PARCE QUE DEH EST NULL 
+     public int addCours(Cours coursajout) {
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 int returnValue = 0;
+		 // connexion a la base de donnees
+		 try {
+		 // tentative de connexion
+		 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+		 // preparation de l'instruction SQL, chaque ? represente une valeur
+		 // a communiquer dans l'insertion.
+		 // les getters permettent de recuperer les valeurs des attributs
+		 //souhaites
+		 SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss");
+		 DateEtHeure deh = new DateEtHeure(0,0,0,0,0,0);
+		 deh = coursajout.getDateEtHeure();
+		 System.out.println(deh.getJour());
+		 Date dateC= sdf.parse(deh.getJour()+"/"+deh.getMois()+"/"+deh.getAnnee()+" "+deh.getHeure()+":"+deh.getMinute()+":"+deh.getSeconde());
+		 java.sql.Date datesC= new java.sql.Date(dateC.getTime());
+		 
+		 ps = con.prepareStatement("INSERT INTO Cours (cou_num_cours,cou_matiere,cou_duree,cou_date_heure,cou_salle,cou_type,cou_id_ens,cou_id_ens_remp,cou_id_grp,cou_absent,cou_id) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?)");
+		 ps.setInt(1, coursajout.getNumCours());
+		 ps.setString(2,coursajout.getMatiere());
+		 ps.setInt(3,coursajout.getDuree());
+		 ps.setDate(4,datesC);
+		 ps.setString(5, coursajout.getSalle());
+		 ps.setInt(6,coursajout.getTypeCours());
+		 ps.setInt(7,coursajout.getEns());
+		 ps.setInt(8,coursajout.getRemp());
+		 ps.setInt(9,coursajout.getGrp());
+		 ps.setInt(10,coursajout.getAbsent());
+		 ps.setString(11,coursajout.getIdCours());
+		
+		 
+		 // Execution de la requete
+		 returnValue = ps.executeUpdate();
+		 }
+		 catch (Exception e) {
+		 if (e.getMessage().contains("20230405"))
+		 System.out.println("Cette absence est déjà présente dans la table .Ajout impossible !");
+		 else
+		 e.printStackTrace();
+		 } 
+		 finally {
+		 // fermeture du preparedStatement et de la connexion
+		 try {
+		 if (ps != null) {
+		 ps.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 try {
+		 if (con != null) {
+		 con.close();
+		 }
+		 } catch (Exception ignore) {
+		 }
+		 }
+		 return returnValue;
+		 }
 	
-
+     /*
+ 	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester indiciduellement les methodes de la classe InteractionBDD
+ 	 */
+     /*
+ 	public static void main(String[] args) {
+ 		InteractionBDD moduleBDD= new InteractionBDD();
+ 		DateEtHeure deh = new DateEtHeure(1,1,1,1,1,1); 
+		Cours c1= new Cours("a",4,"Electronique",1,deh,"C1225",1,1,1,1,1);
+		moduleBDD.addCours(c1);
+ 	}
+ 	*/
 }
