@@ -14,6 +14,8 @@ public class InterfaceTraitementAbsences extends JFrame{
 	private Scolarite scolarite;
 	private int type;
 	private ArrayList<AbsenceDistanciel> listAbsDist;
+	private int width;
+	private int listSize;
 	
 	private JPanel jpContainer;
 	
@@ -22,11 +24,13 @@ public class InterfaceTraitementAbsences extends JFrame{
 	public InterfaceTraitementAbsences(String titre, int width, int height, Scolarite scolarite, int type, ArrayList<AbsenceDistanciel> listAbsDist)
 	{
 		this.setTitle(titre);
-		this.setSize(width, height);
+		this.setSize(width, (listAbsDist.size() + 2) * 80);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.scolarite = scolarite;
 		this.type = type;
 		this.listAbsDist = listAbsDist;
+		listSize = listAbsDist.size();
+		this.width = width;
 		
 		jpContainer = new JPanel();
 		
@@ -81,6 +85,9 @@ public class InterfaceTraitementAbsences extends JFrame{
 				jbValider.setHorizontalAlignment(SwingConstants.CENTER);
 				jpDetails.add(jbValider);
 				final int j = i;
+				JButton jbRefuser = new JButton("Refuser");
+				jbRefuser.setHorizontalAlignment(SwingConstants.CENTER);
+				jpDetails.add(jbRefuser);
 				jbValider.addActionListener(new ActionListener() {
 					
 					@Override
@@ -88,17 +95,33 @@ public class InterfaceTraitementAbsences extends JFrame{
 						// Ajouter requete pour valider l'absence en prenant en compte l'id de l'absence
 						InteractionBDD moduleBDD = new InteractionBDD();
 						int id = listAbsDist.get(j).getId();
+						//listAbsDist.remove(j);
+						listSize--;
+						System.out.println("Id abs = "+ id);
 						moduleBDD.validerAbsenceDist(id);
+						jbValider.setVisible(false);
+						jbRefuser.setVisible(false);
+						jpContainer.remove(jpDetails);
+						jpContainer.setLayout(new GridLayout(listSize + 2, 1));
+						refreshWindow();
 					}
 				});
-				JButton jbRefuser = new JButton("Refuser");
-				jbRefuser.setHorizontalAlignment(SwingConstants.CENTER);
-				jpDetails.add(jbRefuser);
 				jbRefuser.addActionListener(new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// Ajouter requete pour refuser l'absence en prenant en compte l'id de l'absence
+						InteractionBDD moduleBDD = new InteractionBDD();
+						int id = listAbsDist.get(j).getId();
+						//listAbsDist.remove(j);
+						listSize--;
+						System.out.println("Id abs = "+ id);
+						moduleBDD.refuserAbsenceDist(id);
+						jbValider.setVisible(false);
+						jbRefuser.setVisible(false);
+						jpContainer.remove(jpDetails);
+						jpContainer.setLayout(new GridLayout(listSize + 2, 1));
+						refreshWindow();
 						
 					}
 				});
@@ -117,6 +140,7 @@ public class InterfaceTraitementAbsences extends JFrame{
 					
 				}
 			});
+			
 		}
 		
 		
@@ -124,7 +148,16 @@ public class InterfaceTraitementAbsences extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
+	
 		
+		
+	}
+	
+	public void refreshWindow()
+	{
+		this.setSize(width, (listSize + 2) * 80);
+		this.setContentPane(jpContainer);
+		this.setVisible(true);
 	}
 
 }
