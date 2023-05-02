@@ -25,6 +25,8 @@ public class InteractionBDD {
 	private String filiere;
 	private String numero;
 	private String matiere;
+	private DateEtHeure abs_ens_debut;
+	private DateEtHeure abs_ens_fin;
 	private int annee;
 	private boolean estGestionnaire;
 	
@@ -119,13 +121,122 @@ public class InteractionBDD {
 		}
 	}
 	
+	public ArrayList<AbsenceEnseignant> getListAbsenceEnseignant(Enseignant enseignant)
+	{
+		ArrayList<AbsenceEnseignant> listAbs = new ArrayList<AbsenceEnseignant>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			System.out.println("Recuperation des absences enseignants");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT * FROM AbsenceEnseignant WHERE abs_ens_id_ens = ?");
+			ps.setInt(1, enseignant.getId());
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				int abs_ens_id = rs.getInt("abs_ens_id");
+				int abs_ens_id_ens = rs.getInt("abs_ens_id_ens");
+				//DateEtHeure abs_ens_debut = rs.getDate("abs_ens_debut"); A modifier pour manipuler les types dates 
+				//DateEtHeure abs_ens_fin = rs.getDate("abs_ens_fin");
+				String abs_ens_raison= rs.getString("abs_ens_raison");
+				AbsenceEnseignant absEns = new AbsenceEnseignant(abs_ens_id, abs_ens_id_ens, abs_ens_debut, abs_ens_fin, abs_ens_raison);
+				listAbs.add(absEns);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listAbs;
+	}
+	public int getCountAbsenceEnseignant()
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+		try {
+			System.out.println("Recuperation nb absences enseignant dans la bdd...");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT COUNT(*) AS nb FROM AbsenceEnseignant");
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+				returnValue = rs.getInt("nb");
+			}
+			System.out.println("Il y a : "+ returnValue);
+			return returnValue;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public ArrayList<Justificatifabsence> getListJustificatifs(Enseignant enseignant)
+	{
+		ArrayList<Justificatifabsence> listJus = new ArrayList<Justificatifabsence>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			System.out.println("Recuperation des justificatifs enseignants");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT * FROM Justificatif WHERE just_nom_compte = ? AND just_prenom_compte=?");
+			ps.setString(1, enseignant.getNom());
+			ps.setString(2, enseignant.getPrenom());
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				int just_id = rs.getInt("just_id");
+				//DateEtHeure just_date = rs.getDate("just_date"); A modifier pour manipuler les types dates 
+				String just_type_justificatif= rs.getString("just_type_justifcatif");
+				String just_raison= rs.getString("just_raison");
+				String just_nom_compte= rs.getString("just_nom_compte");
+				String just_prenom_compte= rs.getString("just_prenom_compte");
+				//Justificatifabsence justifens = new Justificatifabsence(just_id,just_date,just_type_justificatif, just_raison,just_nom_compte,just_prenom_compte);
+				//listJus.add(justifens);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listJus;
+	}
+	public int getCountJustifEnseignant()
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+		try {
+			System.out.println("Recuperation nb justif enseignant dans la bdd...");
+			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			ps = con.prepareStatement("SELECT COUNT(*) AS nb FROM Justificatif");
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+				returnValue = rs.getInt("nb");
+			}
+			System.out.println("Il y a : "+ returnValue);
+			return returnValue;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public DateEtHeure getDebutFermeture() { //Methode pour recup le debut d'une période de fermeture, à modifier
-		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		DateEtHeure debut_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return debut_fermeture;
 	}
 	
 	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
-		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00);
+		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return fin_fermeture;
 	}
 	
@@ -500,7 +611,134 @@ public class InteractionBDD {
 		 }
 		 return returnValue;
 		 }
-	
+     public Cours getCours(String idcoursmodif) {
+    	 Connection con = null;
+    	 PreparedStatement ps = null;
+    	 ResultSet rs = null;
+    	 Cours returnValue = null;
+    	 // connexion a la base de donnees
+    	 try {
+    	 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+    	 ps = con.prepareStatement("SELECT * FROM Cours WHERE cou_id = ?");
+    	 ps.setString(1, idcoursmodif);
+    	 // on execute la requete
+    	 // rs contient un pointeur situe juste avant la premiere ligne retournee
+    	 rs = ps.executeQuery();
+    	 // passe a la premiere (et unique) ligne retournee
+    	 if (rs.next()) {
+    		 //GERER LE TYPE DATE 
+    	 /*returnValue = new Cours(rs.getString("cou_num_cours"),
+    			 rs.getString("cou_matiere"),
+    			 rs.getDate("cou_date_heure"),
+    			 rs.getString("cou_salle"),
+    			 rs.getInt("cou_type"),
+    			 rs.getInt("cou_id_ens"),
+    			 rs.getInt("cou_id_ens_remp"),
+    	         rs.getInt("cou_absent"),
+    	         rs.getString("cou_id"));*/
+    	 }
+    	 } catch (Exception ee) {
+    	 ee.printStackTrace();
+    	 } finally {
+    	 // fermeture du ResultSet, du PreparedStatement et de la Connexion
+    	 try {
+    	 if (rs != null) {
+    	 rs.close();
+    	 }
+    	 } catch (Exception ignore) {
+    	 }
+    	 try {
+    	 if (ps != null) {
+    	 ps.close();
+    	 }
+    	 } catch (Exception ignore) {
+    	 }
+    	 try {
+    	 if (con != null) {
+    	 con.close();
+    	 }
+    	 } catch (Exception ignore) {
+    	 }
+    	 }
+    	 return returnValue;
+    	 } 
+
+     public int modifierCours(Cours coursamodif) {
+    	 Connection con = null;
+    	 PreparedStatement ps = null;
+    	 PreparedStatement ps1 = null;
+    	 int returnValue = 0;
+
+    	 // connexion a la base de donnees
+    	 try {
+    	 // tentative de connexion
+          con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+			//Recuperer le cours en lui meme 
+			int idens=0,idensRemp=0;
+			idens=coursamodif.getEns();
+			idensRemp=coursamodif.getRemp();
+    	 ps = con.prepareStatement("UPDATE Cours set cou_id_ens = ?, cou_id_ens_remp= ? WHERE cou_id = ?");
+    	 
+    	 ps.setInt(1, idensRemp);
+    	 ps.setInt(2, idens);
+  
+    	 // Execution de la requete
+    	 returnValue = ps.executeUpdate();
+    	 } catch (Exception e) {
+    	 e.printStackTrace();
+    	 } finally {
+    	 // fermeture du preparedStatement et de la connexion
+    	 try {
+    	 if (ps != null) {
+    	 ps.close();
+    	 }
+    	 } catch (Exception ignore) {
+    	 }
+    	 try {
+    	 if (con != null) {
+    	 con.close();
+    	 }
+    	 } catch (Exception ignore) {
+    	 }
+    	 }
+    	 return returnValue;
+    	 } 
+     public int delete(Cours coursasupprimer) {
+    	 Connection con = null;
+    	 PreparedStatement ps = null;
+    	 int returnValue = 0;
+    	 // connexion a la base de donnees
+    	 try {
+    	 // tentative de connexion
+    	 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+    	 // preparation de l'instruction SQL, le ? represente la valeur de l'ID
+    	 // a communiquer dans la suppression.
+    	 // le getter permet de recuperer la valeur de l'ID du fournisseur
+    	 ps = con.prepareStatement("DELETE FROM Cours WHERE cou_id = ?");
+    	 ps.setString(1,coursasupprimer.getIdCours());
+    	 // Execution de la requete
+    	 returnValue = ps.executeUpdate();
+    	 } catch (Exception e) {
+    	 e.printStackTrace(); 
+    	 } finally {
+    		 // fermeture du preparedStatement et de la connexion
+    		 try {
+    		 if (ps != null) {
+    		 ps.close();
+    		 }
+    		 } catch (Exception ignore) {
+    		 }
+    		 try {
+    		 if (con != null) {
+    		 con.close();
+    		 }
+    		 } catch (Exception ignore) {
+    		 }
+    		 }
+    		 return returnValue;
+    		 }
+    	 
+
      /*
  	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester indiciduellement les methodes de la classe InteractionBDD
  	 */
