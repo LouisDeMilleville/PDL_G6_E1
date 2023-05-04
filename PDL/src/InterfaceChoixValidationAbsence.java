@@ -80,7 +80,7 @@ public class InterfaceChoixValidationAbsence extends JFrame{
 				// TODO Auto-generated method stub
 				InteractionBDD moduleBDD = new InteractionBDD();
 				ArrayList<AbsenceDistanciel> listAbs = moduleBDD.getListAbsenceDistanciel();
-				new InterfaceTraitementAbsences("EsigServices", 1200, 800, scolarite, 2, listAbs);
+				new InterfaceTraitementAbsences("EsigServices", 1200, 800, scolarite, 2, listAbs, null);
 				dispose();
 				
 			}
