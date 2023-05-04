@@ -566,6 +566,27 @@ public class InteractionBDD {
  			e.printStackTrace();
  		}
  	}
+     
+     public void refuserAbsenceDist(int idAbsDist)
+  	 {
+  		Connection con = null;
+  		PreparedStatement ps = null;
+  		ResultSet rs = null;
+  		
+  		try {
+  			
+  			System.out.println("Refus de l'absence...");
+  			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+  			ps = con.prepareStatement("UPDATE AbsenceDistanciel SET abs_dist_etat_justif = 2 WHERE abs_dist_id = ?");
+  			ps.setInt(1, idAbsDist);
+  			rs = ps.executeQuery();
+  			System.out.println("Absence refusee");
+  			
+  		} catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+  	 }
 	
      /*
  	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester indiciduellement les methodes de la classe InteractionBDD
