@@ -27,8 +27,21 @@ public class InteractionBDD {
 	private String matiere;
 	private DateEtHeure abs_ens_debut;
 	private DateEtHeure abs_ens_fin;
+    private String cou_id;
+	private int cou_num_cours;
+	private String cou_matiere;
+	private int cou_duree;
+	private DateEtHeure cou_date_heure;
+	private String cou_salle;
+	private int cou_type;
+	private int cou_id_ens;
+	private int cou_id_grp;
+	private int cou_id_ens_remp;
+	private int cou_absent;
 	private int annee;
+	
 	private boolean estGestionnaire;
+	
 	
 	public InteractionBDD() {
 		// chargement du pilote de bases de donnees
@@ -137,8 +150,10 @@ public class InteractionBDD {
 			{
 				int abs_ens_id = rs.getInt("abs_ens_id");
 				int abs_ens_id_ens = rs.getInt("abs_ens_id_ens");
-				//DateEtHeure abs_ens_debut = rs.getDate("abs_ens_debut"); A modifier pour manipuler les types dates 
-				//DateEtHeure abs_ens_fin = rs.getDate("abs_ens_fin");
+				String abs_ensd=rs.getString("abs_ens_debut");
+				DateEtHeure abs_ens_debut = DateEtHeure.toDate(abs_ensd);
+				String abs_ensf=rs.getString("abs_ens_fin");
+				DateEtHeure abs_ens_fin = DateEtHeure.toDate(abs_ensf);
 				String abs_ens_raison= rs.getString("abs_ens_raison");
 				AbsenceEnseignant absEns = new AbsenceEnseignant(abs_ens_id, abs_ens_id_ens, abs_ens_debut, abs_ens_fin, abs_ens_raison);
 				listAbs.add(absEns);
@@ -174,6 +189,7 @@ public class InteractionBDD {
 		}
 		return 0;
 	}
+	
 	public ArrayList<Justificatifabsence> getListJustificatifs(Enseignant enseignant)
 	{
 		ArrayList<Justificatifabsence> listJus = new ArrayList<Justificatifabsence>();
@@ -181,7 +197,7 @@ public class InteractionBDD {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			System.out.println("Recuperation des justificatifs enseignants");
+			System.out.println("1");
 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
 			ps = con.prepareStatement("SELECT * FROM Justificatif WHERE just_nom_compte = ? AND just_prenom_compte=?");
 			ps.setString(1, enseignant.getNom());
@@ -190,13 +206,17 @@ public class InteractionBDD {
 			while(rs.next())
 			{
 				int just_id = rs.getInt("just_id");
-				//DateEtHeure just_date = rs.getDate("just_date"); A modifier pour manipuler les types dates 
-				String just_type_justificatif= rs.getString("just_type_justifcatif");
+				String fausse_date = rs.getString("just_date");// A modifier pour manipuler les types dates 
+				System.out.println("2: "+ fausse_date);
+				DateEtHeure jus_date= DateEtHeure.toDate(fausse_date);
+				System.out.println("3");
+				//jus_date.afficher();
+				String just_type_justificatif= rs.getString("just_type_justificatif");
 				String just_raison= rs.getString("just_raison");
 				String just_nom_compte= rs.getString("just_nom_compte");
 				String just_prenom_compte= rs.getString("just_prenom_compte");
-				//Justificatifabsence justifens = new Justificatifabsence(just_id,just_date,just_type_justificatif, just_raison,just_nom_compte,just_prenom_compte);
-				//listJus.add(justifens);
+				Justificatifabsence justifens = new Justificatifabsence(just_id,just_type_justificatif,jus_date,just_raison,just_nom_compte,just_prenom_compte);
+				listJus.add(justifens);
 			}
 			
 		} catch (SQLException e) {
@@ -405,7 +425,9 @@ public class InteractionBDD {
 					System.out.println("Prenom : "+ prenom);
 					System.out.println("Mail : "+ mail);
 					System.out.println("Est gestionnaire : "+ estGestionnaire);
+Scolarite scolarite = new Scolarite(Integer.parseInt(identifiant), nom, prenom, mail, mdp,estGestionnaire);
 					
+					InterfaceScolarite inter = new InterfaceScolarite("EsigServices", 800, 800, scolarite);
 					//Ajouter création d'un objet Enseignant
 				}
 				else {
@@ -615,7 +637,9 @@ public class InteractionBDD {
     	 Connection con = null;
     	 PreparedStatement ps = null;
     	 ResultSet rs = null;
-    	 Cours returnValue = null;
+    	 boolean returnValue = false;
+    	 DateEtHeure deh = new DateEtHeure(1,1,1,1,1,1);
+    	 Cours coursmodif= new Cours (5,"PDL",1,deh,"C1225",1,2,1,1,1,"a");
     	 // connexion a la base de donnees
     	 try {
     	 con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
@@ -624,18 +648,38 @@ public class InteractionBDD {
     	 // on execute la requete
     	 // rs contient un pointeur situe juste avant la premiere ligne retournee
     	 rs = ps.executeQuery();
+    	 
     	 // passe a la premiere (et unique) ligne retournee
     	 if (rs.next()) {
     		 //GERER LE TYPE DATE 
-    	 /*returnValue = new Cours(rs.getString("cou_num_cours"),
-    			 rs.getString("cou_matiere"),
-    			 rs.getDate("cou_date_heure"),
-    			 rs.getString("cou_salle"),
-    			 rs.getInt("cou_type"),
-    			 rs.getInt("cou_id_ens"),
-    			 rs.getInt("cou_id_ens_remp"),
-    	         rs.getInt("cou_absent"),
-    	         rs.getString("cou_id"));*/
+    		 
+    		 String cours_date=rs.getString("cou_date_heure");
+    		DateEtHeure cour_date_heure =DateEtHeure.toDateEtHeure(cours_date);
+    	         returnValue = true;
+    	         cou_num_cours = rs.getInt("cou_num_cours");
+    			 cou_matiere=rs.getString("cou_matiere");
+    			 cou_duree=rs.getInt("cou_duree");
+    			cou_date_heure=cour_date_heure;
+    			 cou_salle=rs.getString("cou_salle");
+    			 cou_type=rs.getInt("cou_type");
+    			 cou_id_ens=rs.getInt("cou_id_ens");
+    			 cou_id_ens_remp=rs.getInt("cou_id_ens_remp");
+    			 cou_id_grp=rs.getInt("cou_id_grp");
+    	         cou_absent=rs.getInt("cou_absent");
+    	         cou_id=rs.getString("cou_id");
+    	         
+   	                System.out.println("Nombre de cours : "+ cou_num_cours);
+				    System.out.println("Matiere : "+ cou_matiere);
+				    System.out.println("Duree: "+ cou_duree);
+					System.out.println("Date Et Heure du cours: "+ cou_date_heure);
+					System.out.println("Salle : "+ cou_salle);
+					System.out.println("Type de cours : "+cou_type);
+					System.out.println("Identifiant de l'enseignant : "+ cou_id_ens);
+					System.out.println("Identifiant de l'enseignant remplaçant: "+ cou_id_ens_remp);
+					System.out.println("Le professeur est absent?: "+ cou_absent);
+					System.out.println("Identifiant du cours : "+ cou_id);
+    	         Cours coursamodif= new Cours (cou_num_cours,cou_matiere,cou_duree,cou_date_heure,cou_salle,cou_type,cou_id_ens,cou_id_ens_remp,cou_id_grp,cou_absent,cou_id);
+    	         coursmodif=coursamodif;
     	 }
     	 } catch (Exception ee) {
     	 ee.printStackTrace();
@@ -660,13 +704,13 @@ public class InteractionBDD {
     	 } catch (Exception ignore) {
     	 }
     	 }
-    	 return returnValue;
+    
+    	 return coursmodif;
     	 } 
 
      public int modifierCours(Cours coursamodif) {
     	 Connection con = null;
     	 PreparedStatement ps = null;
-    	 PreparedStatement ps1 = null;
     	 int returnValue = 0;
 
     	 // connexion a la base de donnees
@@ -681,6 +725,7 @@ public class InteractionBDD {
     	 
     	 ps.setInt(1, idensRemp);
     	 ps.setInt(2, idens);
+    	 ps.setString(3,coursamodif.getIdCours());
   
     	 // Execution de la requete
     	 returnValue = ps.executeUpdate();
@@ -742,14 +787,19 @@ public class InteractionBDD {
      /*
  	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester indiciduellement les methodes de la classe InteractionBDD
  	 */
-     /*
+     
  	public static void main(String[] args) {
  		InteractionBDD moduleBDD= new InteractionBDD();
- 		DateEtHeure deh = new DateEtHeure(1,1,1,1,1,1); 
-		Cours c1= new Cours("a",4,"Electronique",1,deh,"C1225",1,1,1,1,1);
+ 		DateEtHeure deh = new DateEtHeure(1,1,1,1,1,1);
+
+		Cours c1= new Cours(5,"PDL",1,deh,"C1225",1,2,1,1,1,"a");
+
 		moduleBDD.addCours(c1);
+
+		moduleBDD.getCours(c1.getIdCours());
+		
  	}
- 	*/
+ 
 	
 
 }
