@@ -102,7 +102,7 @@ public class InterfaceScolarite extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				new LoginWindow("EsigServices", 800, 800);
+				new InterfaceLogin("EsigServices").main(null);
 				
 			}
 		});
@@ -112,6 +112,16 @@ public class InterfaceScolarite extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				new InterfaceGestiondeCours("EsigServices", 800, 800, scolarite);
+				dispose();
+			}
+		});
+        
+        jbGestionAbsence.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new InterfaceChoixValidationAbsence("EsigServices", 800, 800, scolarite);
 				dispose();
 			}
 		});

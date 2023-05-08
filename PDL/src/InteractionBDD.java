@@ -299,7 +299,8 @@ public class InteractionBDD {
 					
 					Etudiant etudiant = new Etudiant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, filiere, annee);
 					
-					InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
+					//InterfaceEleve inter = new InterfaceEleve("EsigServices", 800, 800, etudiant);
+					new EtudiantGUI(etudiant).main(null, etudiant);
 					//Ajouter création d'un objet Eleve
 				}
 				else {
@@ -425,10 +426,11 @@ public class InteractionBDD {
 					System.out.println("Prenom : "+ prenom);
 					System.out.println("Mail : "+ mail);
 					System.out.println("Est gestionnaire : "+ estGestionnaire);
-Scolarite scolarite = new Scolarite(Integer.parseInt(identifiant), nom, prenom, mail, mdp,estGestionnaire);
 					
-					InterfaceScolarite inter = new InterfaceScolarite("EsigServices", 800, 800, scolarite);
-					//Ajouter création d'un objet Enseignant
+
+					
+					Scolarite sco = new Scolarite(Integer.parseInt(identifiant), nom, prenom, mail, " ", estGestionnaire);
+					new InterfaceScolarite("EsigServices", 800, 800, sco);
 				}
 				else {
 					returnValue = false;
@@ -781,9 +783,91 @@ Scolarite scolarite = new Scolarite(Integer.parseInt(identifiant), nom, prenom, 
     		 }
     		 }
     		 return returnValue;
-    		 }
+     }
     	 
-
+     
+     public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel()
+     {
+    	 ArrayList<AbsenceDistanciel> returnValue = new ArrayList<>();
+    	 Connection con = null;
+ 		 PreparedStatement ps = null;
+ 		 ResultSet rs = null;
+ 		 try {
+ 			System.out.println("Recuperation des absences distanciel non validee");
+ 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+ 			ps = con.prepareStatement("SELECT abs_dist_id, abs_dist_duree, abs_dist_justif, abs_dist_matiere, ele_nom, ele_prenom FROM AbsenceDistanciel INNER JOIN Eleve ON ele_id = absencedistanciel.abs_dist_id_eleve WHERE abs_dist_etat_justif = 0");
+ 			System.out.println("Here 1");
+ 			rs = ps.executeQuery();
+ 			while(rs.next())
+ 			{
+ 				int idAbsDist = Integer.parseInt(rs.getString("abs_dist_id"));
+ 				System.out.println("Here 2");
+ 				int dureeAbsDist = Integer.parseInt(rs.getString("abs_dist_duree"));
+ 				System.out.println("Here 3");
+ 				String justificatif = rs.getString("abs_dist_justif");
+ 				System.out.println("Here 4");
+ 				String matiere = rs.getString("abs_dist_matiere");
+ 				System.out.println("Here 5");
+ 				String nom = rs.getString("ele_nom");
+ 				System.out.println("Here 6");
+ 				String prenom = rs.getString("ele_prenom");
+ 				System.out.println("Here 7");
+ 				AbsenceDistanciel absDist = new AbsenceDistanciel(idAbsDist, dureeAbsDist, justificatif, matiere, nom, prenom);
+ 				returnValue.add(absDist);
+ 			}
+ 			System.out.println("Il y a : "+ returnValue.size());
+ 			return returnValue;
+ 		 } catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		 }
+    	 
+    	 
+    	 return returnValue;
+    	 
+     }
+     
+     public void validerAbsenceDist(int idAbsDist)
+ 	{
+ 		Connection con = null;
+ 		PreparedStatement ps = null;
+ 		ResultSet rs = null;
+ 		
+ 		try {
+ 			
+ 			System.out.println("Validation de l'absence...");
+ 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+ 			ps = con.prepareStatement("UPDATE AbsenceDistanciel SET abs_dist_etat_justif = 1 WHERE abs_dist_id = ?");
+ 			ps.setInt(1, idAbsDist);
+ 			rs = ps.executeQuery();
+ 			System.out.println("Absence validee");
+ 			
+ 		} catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
+     
+     public void refuserAbsenceDist(int idAbsDist)
+  	 {
+  		Connection con = null;
+  		PreparedStatement ps = null;
+  		ResultSet rs = null;
+  		
+  		try {
+  			
+  			System.out.println("Refus de l'absence...");
+  			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+  			ps = con.prepareStatement("UPDATE AbsenceDistanciel SET abs_dist_etat_justif = 2 WHERE abs_dist_id = ?");
+  			ps.setInt(1, idAbsDist);
+  			rs = ps.executeQuery();
+  			System.out.println("Absence refusee");
+  			
+  		} catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+  	 }
      /*
  	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester indiciduellement les methodes de la classe InteractionBDD
  	 */
