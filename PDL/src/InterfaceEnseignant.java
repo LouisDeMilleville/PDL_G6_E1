@@ -9,6 +9,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface d'un enseignant
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceEnseignant extends JFrame {
 	
 	private Enseignant enseignant;
@@ -25,6 +32,13 @@ public class InterfaceEnseignant extends JFrame {
 	private JButton jbMesAbsences;
 	private String idEnseignant;
 	
+	/**
+	 * Constructeur de l'interface
+	 * @param titre
+	 * @param width
+	 * @param height
+	 * @param enseignant
+	 */
 	public InterfaceEnseignant(String titre, int width, int height, Enseignant enseignant/*,String idEnseignant*/)
 	{
 		this.setTitle(titre);
@@ -89,6 +103,7 @@ public class InterfaceEnseignant extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
+		//Ajout des listener sur les boutons
 		jbDeconnexion.addActionListener(new ActionListener() {
 			
 			@Override

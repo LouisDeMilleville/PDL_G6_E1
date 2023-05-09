@@ -17,6 +17,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
+/**
+ * Cette classe est l'interface de connexion du programme
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
+
 public class InterfaceLogin {
 
 	private JFrame frame;
@@ -29,7 +37,7 @@ public class InterfaceLogin {
 	private int selectedIndex;
 
 	/**
-	 * Launch the application.
+	 * Demarrage de la fenetre, mettre null en parametre)
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

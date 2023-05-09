@@ -9,6 +9,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface qui affiche les absences distanciel d'un etudiant
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 	
 	private Etudiant etudiant;
@@ -20,6 +27,13 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 	private JLabel jlDuree, jlJustif, jlEtat, jlMatiere;
 	private JButton jbRetour;
 	
+	/**
+	 * Constructeur de la fenetre
+	 * @param titre
+	 * @param width
+	 * @param height
+	 * @param etudiant
+	 */
 	public InterfaceAffichageAbsenceDistanciel(String titre, int width, int height, Etudiant etudiant) {
 		// TODO Auto-generated constructor stub
 		this.setTitle(titre);
@@ -35,6 +49,7 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 		
 		listAbs = moduleBDD.getListAbsenceDistanciel(etudiant);
 		
+		//Creation des differents elements de la fenetre
 		jpContainer = new JPanel();
 		jpContainer.setLayout(new GridLayout(listAbs.size() + 2, 1));
 		
@@ -112,6 +127,7 @@ public class InterfaceAffichageAbsenceDistanciel extends JFrame{
 		jbRetour.setHorizontalAlignment(SwingConstants.CENTER);
 		jpContainer.add(jbRetour);
 		
+		//Creation listener du bouton retour
 		jbRetour.addActionListener(new ActionListener() {
 			
 			@Override

@@ -8,6 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface scolarite
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceScolarite extends JFrame {
 	
 	private Scolarite scolarite;

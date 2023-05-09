@@ -9,6 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est une interface qui permet à un eleve de saisir une absence distanciel
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceSaisieAbsenceDistanciel extends JFrame{
 	
 	private Etudiant etudiant;

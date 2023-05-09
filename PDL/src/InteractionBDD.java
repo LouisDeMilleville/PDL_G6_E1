@@ -263,6 +263,10 @@ public class InteractionBDD {
 					mdp = rs.getString("ens_mdp");
 					numero = rs.getString("ens_numero");
 					matiere = rs.getString("ens_matiere");
+					
+					//Adapter pour passer ca en array list et recuperer les details de la matiere en question
+					//Les masses horaires ci-dessous sont arbitraires et ne correspondent pas necessairement à la réalité
+					Matiere mat_obj = new Matiere(matiere, 10, 10, 10);
 				
 					
 					System.out.println("Identifiant : "+ identifiant);
@@ -272,7 +276,7 @@ public class InteractionBDD {
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
 					
-					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
+					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, mat_obj);
 					
 					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
 				}

@@ -10,6 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * Ancienne interface de connexion desormais inutile, voir InterfaceLogin
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 
 public class LoginWindow extends JFrame{
 	

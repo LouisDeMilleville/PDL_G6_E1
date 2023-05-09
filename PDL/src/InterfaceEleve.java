@@ -8,6 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'ancienne interface Eleve , elle n'est plus utilisée, voir EtudiantGUI
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceEleve extends JFrame {
 	
 	private JPanel jpContainer;
