@@ -1,4 +1,12 @@
 import java.util.ArrayList;
+
+/**
+ * Cette classe représente un Enseignant
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class Enseignant extends Compte{
 	
 	private String numero;
