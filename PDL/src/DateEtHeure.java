@@ -52,6 +52,52 @@ public class DateEtHeure {
 	 * Affecte une nouvelle annee
 	 * @param annee nouvelle annee
 	 */
+	/*
+	 * CONVERTI UN STRING EN UN TYPE DATEETHEURE
+	 */
+	public static DateEtHeure toDateEtHeure( String date)
+	{
+		String dateSplit1[]=date.split(" ");
+		String dateSplit2[]=dateSplit1[0].split("-");
+		String timeSplit[]=dateSplit1[1].split(":");
+		
+		int annee=Integer.parseInt(dateSplit2[2]);
+		int mois=Integer.parseInt(dateSplit2[1]);
+		int jour=Integer.parseInt(dateSplit2[0]);
+		
+		int heure=Integer.parseInt(timeSplit[0]);
+		int minute=Integer.parseInt(timeSplit[1]);
+		int seconde=Integer.parseInt(timeSplit[2]); 
+				
+		DateEtHeure dateEtHeure=new DateEtHeure(annee, mois, jour, heure, minute, seconde);
+		
+		return dateEtHeure;
+	}
+	
+	public static DateEtHeure toDate( String date)
+	{
+		String dateSplit1[]=date.split(" ");
+		String dateSplit2[]=dateSplit1[0].split("-");
+		//String timeSplit[]=dateSplit1[1].split(":");
+		
+		int annee=Integer.parseInt(dateSplit2[2]);
+		int mois=Integer.parseInt(dateSplit2[1]);
+		int jour=Integer.parseInt(dateSplit2[0]);
+		
+		//int heure=Integer.parseInt(timeSplit[0]);
+		//int minute=Integer.parseInt(timeSplit[1]);
+		//int seconde=Integer.parseInt(timeSplit[2]); 
+				
+		DateEtHeure dateEtHeure=new DateEtHeure(annee, mois, jour);
+		
+		return dateEtHeure;
+	}
+	
+	public String toString() {
+		String stringDate=annee+"/"+mois+"/"+jour;
+		return stringDate;
+	}
+	
 	public void setAnnee(int annee)
 	{
 		this.annee=annee;
@@ -163,34 +209,40 @@ public class DateEtHeure {
 		System.out.println("Heure: "+ heure+":"+minute+":"+seconde);
 	}
 	
+	
 	/*
 	 * Ce main n'est pas destinee a etre executee dans le projet, il sert a tester individuellement les methodes de la classe DateEtHeure
 	 */
-	/*
+	
 	public static void main(String[] args) {
-		DateEtHeure deh = new DateEtHeure(0,0,0,0,0,0);
-		deh.afficher();
-		int j=deh.getJour();
-		int m=deh.getMois();
-		int a=deh.getAnnee();
-		int h=deh.getHeure();
-		int mi=deh.getMinute();
-		int s=deh.getSeconde();
-		System.out.println(j+" "+m+" "+a+" "+h+" "+mi+" "+s);
-		deh.setJour(1);
-		deh.setMois(2);
-		deh.setAnnee(3);
-		deh.setHeure(1);
-		deh.setMinute(2);
-		deh.setSeconde(4);
-		j=deh.getJour();
-		m=deh.getMois();
-		a=deh.getAnnee();
-		h=deh.getHeure();
-		mi=deh.getMinute();
-		s=deh.getSeconde();
-		System.out.println(j+" "+m+" "+a+" "+h+" "+mi+" "+s);
+		
+//		DateEtHeure deh = new DateEtHeure(11,22,2023,0,0,0);
+//		deh.afficher();
+//		System.out.println(deh.toString());
+//		int j=deh.getJour();
+//		int m=deh.getMois();
+//		int a=deh.getAnnee();
+//		int h=deh.getHeure();
+//		int mi=deh.getMinute();
+//		int s=deh.getSeconde();
+//		System.out.println(j+" "+m+" "+a+" "+h+" "+mi+" "+s);
+//		deh.setJour(1);
+//		deh.setMois(2);
+//		deh.setAnnee(3);
+//		deh.setHeure(1);
+//		deh.setMinute(2);
+//		deh.setSeconde(4);
+//		j=deh.getJour();
+//		m=deh.getMois();
+//		a=deh.getAnnee();
+//		h=deh.getHeure();
+//		mi=deh.getMinute();
+//		s=deh.getSeconde();
+//		System.out.println(j+" "+m+" "+a+" "+h+" "+mi+" "+s);
+		
+		//String dateString="11/05/2023";
+		//DateEtHeure.toDate(dateString).afficher();;
 	}
-	*/
+	
 }
 

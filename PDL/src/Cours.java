@@ -18,13 +18,13 @@ public class Cours {
 	private int id_grp;
 	private int id_ens_remp;
 	private int estAbsent;
+	private String date_heure1;
 	
     //TODO Ajouter un cours classique 
-	public Cours (String cou_id,int num_cours, String matiere,
+	public Cours (int num_cours, String matiere,
 			int duree, DateEtHeure date_et_heure, String salle, 
-			int type_de_cours,int id_ens,int id_ens_remp, int id_grp,int estAbsent) 
+			int type_de_cours,int id_ens,int id_ens_remp, int id_grp,int estAbsent,String cou_id) 
 	{
-		this.cou_id=cou_id;
 		this.num_cours=num_cours;
 		this.matiere=matiere;
 		this.duree=duree;
@@ -34,13 +34,30 @@ public class Cours {
 		this.id_ens=id_ens;
 		this.id_grp=id_grp;
 		this.id_ens_remp=id_ens_remp;
-		this.estAbsent=estAbsent;			
+		this.estAbsent=estAbsent;
+		this.cou_id=cou_id;
 	}
 	
 	/**
 	 * Renvoie l'id du cours dans la bdd
 	 * @return id du cours
 	 */
+	/*public Cours (int num_cours, String matiere,
+			int duree, String salle, 
+			int type_de_cours,int id_ens,int id_ens_remp, int id_grp,int estAbsent,String cou_id) 
+	{
+		this.num_cours=num_cours;
+		this.matiere=matiere;
+		this.duree=duree;
+		this.date_heure1=date_heure1;
+		this.salle=salle;
+		this.type_de_cours=type_de_cours;
+		this.id_ens=id_ens;
+		this.id_grp=id_grp;
+		this.id_ens_remp=id_ens_remp;
+		this.estAbsent=estAbsent;
+		this.cou_id=cou_id;
+	}*/
 	public String getIdCours() {
 	    	return cou_id;
 	}
