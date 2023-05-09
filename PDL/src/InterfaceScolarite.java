@@ -49,12 +49,12 @@ public class InterfaceScolarite extends JFrame {
 		jpSousContainer.setLayout(new GridLayout(4, 2));
 		
 		jbGestionCours = new JButton();
-		jbGestionCours.setText("gestion des cours");
+		jbGestionCours.setText("Gestion des cours");
 		jbGestionCours.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionCours);
 		
 		jbGestionEleve = new JButton();
-		jbGestionEleve.setText("Gestion des �l�ves");
+		jbGestionEleve.setText("Gestion des eleves");
 		jbGestionEleve.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionEleve);
 		

@@ -12,12 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 
 
 	public class InterfaceMonPlanning extends JFrame{
 		
 		private Enseignant enseignant;
 		private JPanel jpContainer;
+		private JPanel jpSousContainer;
 		private JLabel jlMessageInformation;
 		private JPanel jpContainerDateduCours;
 		private JLabel jlDateduCours;
@@ -29,87 +34,48 @@ import javax.swing.SwingConstants;
 		private JLabel jlGroupe;
 		private JPanel jpContainerBoutons;
 		private JButton jbRetour;
+		private JDayChooser dayChooser;
+		private DateEtHeure datecours;
+		
+		
+		
 		
 		public InterfaceMonPlanning(String titre, int width, int height, Enseignant enseignant)
 		{
 			this.setTitle(titre);
 			this.setSize(485, 204);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-			jpContainer = new JPanel();
-			jpContainer.setLayout(new GridLayout(8, 1));
-			
-			jlMessageInformation = new JLabel();
-			jlMessageInformation.setText("Votre planning du jour");
-			jlMessageInformation.setHorizontalAlignment(SwingConstants.CENTER);
-			jpContainer.add(jlMessageInformation);
-			
-			jpContainerDateduCours = new JPanel();
-			jpContainerDateduCours.setLayout(new GridLayout(1,2));
-			
-			jlDateduCours = new JLabel();
-			jlDateduCours.setText("Date du cours");
-			jlDateduCours.setHorizontalAlignment(SwingConstants.CENTER);
-			jpContainerDateduCours.add(jlDateduCours);
-	        
-	        jpContainer.add(jpContainerDateduCours);
-	        			
-			 jpContainerHeure = new JPanel();
-				jpContainerHeure.setLayout(new GridLayout(1,2));
-				
-				jlHeure = new JLabel();
-				jlHeure.setText("Heure du cours");
-				jlHeure.setHorizontalAlignment(SwingConstants.CENTER);
-				jpContainerHeure.add(jlHeure);
-				
-				jpContainer.add(jpContainerHeure);
-				
-				 jpContainerCours = new JPanel();
-					jpContainerCours.setLayout(new BorderLayout(1,2));
+			Panel Calen = new Panel();
+			jpContainer = new JPanel();  
+	        jpContainer.setLayout(null);
+	       JCalendar calendar = new JCalendar();
+	       Calen.add(calendar);
+	       jpContainer.add(Calen);
+	       
+	        /*JDateChooser dateChooser = new JDateChooser();
+	        dateChooser.setBounds(46, 39, 189, 91);
+	        jpContainer.add(dateChooser);
+			        JButton button = new JButton("Get Date");
+			        button.setHorizontalAlignment(SwingConstants.CENTER);
+					jpContainer.add(button);
+					//jpContainer.add(jpSousContainer);
 					
-					jlCours = new JLabel();
-					jlCours.setText("Cours");
-					jlCours.setHorizontalAlignment(SwingConstants.CENTER);
-					jpContainerCours.add(jlCours);
+			        this.setContentPane(jpContainer);
+			        this.setLocationRelativeTo(null);
+					this.setVisible(true);
 					
-					jpContainer.add(jpContainerCours);
-					
-					 jpContainerGroupe = new JPanel();
-						jpContainerGroupe.setLayout(new BorderLayout(1,2));
-						
-						jlGroupe = new JLabel();
-						jlGroupe.setText("Groupe");
-						jlGroupe.setHorizontalAlignment(SwingConstants.CENTER);
-						jpContainerGroupe.add(jlGroupe);
-						jpContainer.add(jpContainerGroupe);
-
-						  jpContainerBoutons = new JPanel();
-					        jpContainerBoutons.setLayout(new BorderLayout(1,2));
-					        
-					        jbRetour = new JButton();
-							jbRetour.setText("Retour");
-							jbRetour.setHorizontalAlignment(SwingConstants.CENTER);
-							jpContainerBoutons.add(jbRetour);
-							
-			jpContainer.add(jpContainerBoutons);
-		
-			jbRetour.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					dispose();
-					new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
-					
-				}
-			});
-	        
-	        
-	        
-	        this.setContentPane(jpContainer);
-			this.setLocationRelativeTo(null);
+			        button.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent e) {
+			                Date selectedDate = dateChooser.getDate();
+			                System.out.println("Selected date: " + selectedDate);
+			            }
+			        });*/
+			
+	       this.setContentPane(jpContainer);
+	        this.setLocationRelativeTo(null);
 			this.setVisible(true);
+			
+			    
 	        
 		}
-
 	}
