@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,13 +10,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface graphique d'un etudiant
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
+
 public class EtudiantGUI {
 
 	private JFrame frame;
 	private Etudiant etudiant;
 
 	/**
-	 * Launch the application.
+	 * Demarre la fenetre, mettre (null, etudiant) en parametre
 	 */
 	public static void main(String[] args, Etudiant etudiant) {
 		EventQueue.invokeLater(new Runnable() {
@@ -42,6 +51,10 @@ public class EtudiantGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		/*
+		 * Cree la fenetre ainsi que les differents elements
+		 */
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,7 +149,9 @@ public class EtudiantGUI {
 		jbDeconnexion.setIcon(new ImageIcon(scaledImageQ));
 		frame.getContentPane().add(jbDeconnexion);
 		
-		
+		/*
+		 * Ajout des listener aux boutons
+		 */
 		jbAbsenceDistanciel.addActionListener(new ActionListener() {
 			
 			@Override

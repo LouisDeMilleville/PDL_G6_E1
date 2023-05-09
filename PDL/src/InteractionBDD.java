@@ -8,6 +8,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Cette classe permet d'interagir avec la BDD depuis le programme
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
+
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
@@ -52,6 +60,11 @@ public class InteractionBDD {
 		}
 	}
 	
+	/**
+	 * Renvoie la liste des AbsenceDistanciel d'un etudiant
+	 * @param etudiant L'etudiant dont on souhaite recuperer les absences
+	 * @return La liste des Absences distanciel de l'etudiant
+	 */
 	public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel(Etudiant etudiant)
 	{
 		ArrayList<AbsenceDistanciel> listAbs = new ArrayList<AbsenceDistanciel>();
@@ -84,6 +97,10 @@ public class InteractionBDD {
 		return listAbs;
 	}
 	
+	/**
+	 * Retourne le nombre d'absences distanciel dans la BDD
+	 * @return Nombre d'absences distanciel
+	 */
 	public int getCountAbsenceDistanciel()
 	{
 		Connection con = null;
@@ -108,6 +125,15 @@ public class InteractionBDD {
 		return 0;
 	}
 	
+	/**
+	 * Insere une nouvelle absence distanciel dans la BDD
+	 * @param idAbs Id de la nouvelle absence
+	 * @param idEle Id de l'eleve absent
+	 * @param duree Duree de l'absence
+	 * @param raison Raison de l'absence
+	 * @param etat Etat de validation de l'absence
+	 * @param matiere Matiere de l'absence
+	 */
 	public void insertAbsenceDistanciel(int idAbs, int idEle, int duree, String raison, int etat, String matiere)
 	{
 		Connection con = null;
@@ -134,6 +160,10 @@ public class InteractionBDD {
 		}
 	}
 	
+	/**
+	 * Renvoie le debut d'une période de fermeture
+	 * @return DateEtHeure de debut d'une periode de fermeture
+	 */
 	public ArrayList<AbsenceEnseignant> getListAbsenceEnseignant(Enseignant enseignant)
 	{
 		ArrayList<AbsenceEnseignant> listAbs = new ArrayList<AbsenceEnseignant>();
@@ -255,11 +285,22 @@ public class InteractionBDD {
 		return debut_fermeture;
 	}
 	
+	/**
+	 * Renvoie la fin d'une période de fermeture
+	 * @return DateEtHeure de fin d'une periode de fermeture
+	 */
 	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
 		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return fin_fermeture;
 	}
 	
+	/**
+	 * Dit si les identifiants rentrés sont correct ou non
+	 * @param type Type du compte qui essaye de se connecter
+	 * @param Identifiant L'identifiant du compte
+	 * @param MotDePasse Le mot de passe du compte
+	 * @return Un boolean qui indique si le combo identifiant / mot de passe est correct pour le type de compte choisi
+	 */
 	public boolean verificationConnexion(int type, String Identifiant, String MotDePasse) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -353,6 +394,10 @@ public class InteractionBDD {
 					mdp = rs.getString("ens_mdp");
 					numero = rs.getString("ens_numero");
 					matiere = rs.getString("ens_matiere");
+					
+					//Adapter pour passer ca en array list et recuperer les details de la matiere en question
+					//Les masses horaires ci-dessous sont arbitraires et ne correspondent pas necessairement à la réalité
+					Matiere mat_obj = new Matiere(matiere, 10, 10, 10);
 				
 					
 					System.out.println("Identifiant : "+ identifiant);
@@ -362,7 +407,7 @@ public class InteractionBDD {
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
 					
-					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
+					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, mat_obj);
 					
 					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
 				}
@@ -465,6 +510,11 @@ public class InteractionBDD {
 		return returnValue;
 	}
   
+	/**
+	 * Insere une nouvelle absence enseignant dans la BDD
+	 * @param absEnsei Absence à inserer
+	 * @return
+	 */
   public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
@@ -521,6 +571,7 @@ public class InteractionBDD {
 		 return returnValue;
 		 }
      
+ 
      public int addJustificatifProf(Justificatifabsence justifProf) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
@@ -786,6 +837,10 @@ public class InteractionBDD {
      }
     	 
      
+     /**
+      * Renvoie la liste des absences distanciel non traitees par la scolarite (où l'etat de validation vaut 0)
+      * @return La liste des absences distanciel non traitees
+      */
      public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel()
      {
     	 ArrayList<AbsenceDistanciel> returnValue = new ArrayList<>();
@@ -827,6 +882,10 @@ public class InteractionBDD {
     	 
      }
      
+     /**
+      * Valide une absence distanciel
+      * @param idAbsDist Id de l'absence distanciel à valider
+      */
      public void validerAbsenceDist(int idAbsDist)
  	{
  		Connection con = null;
@@ -848,6 +907,10 @@ public class InteractionBDD {
  		}
  	}
      
+     /**
+      * Refuse une absence distanciel
+      * @param idAbsDist Id de l'absence distanciel à refuser
+      */
      public void refuserAbsenceDist(int idAbsDist)
   	 {
   		Connection con = null;

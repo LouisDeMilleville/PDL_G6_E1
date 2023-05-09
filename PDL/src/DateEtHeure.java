@@ -1,3 +1,11 @@
+/**
+ * Cette classe représente une date et une heure, elle peut être utilisee pour dater precisement un cours 
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
+
 public class DateEtHeure {
 
 	private int annee;
@@ -7,6 +15,15 @@ public class DateEtHeure {
 	private int minute;
 	private int seconde;
 	
+	/**
+	 * Constructeur pour un objet comportant tous les paramètres incluant l'heure précise
+	 * @param annee
+	 * @param mois
+	 * @param jour
+	 * @param heure
+	 * @param minute
+	 * @param seconde
+	 */
 	public DateEtHeure( int annee, int mois , int jour, int heure, int minute,int seconde)
 	{
 		this.annee=annee;
@@ -17,6 +34,12 @@ public class DateEtHeure {
 		this.seconde=seconde;
 	}
 	
+	/**
+	 * Constructeur s'il n'est pas necessaire de preciser l'heure
+	 * @param annee
+	 * @param mois
+	 * @param jour
+	 */
 	public DateEtHeure( int annee, int mois , int jour)
 	{
 		this.annee=annee;
@@ -25,6 +48,10 @@ public class DateEtHeure {
 		
 	}
 	
+	/**
+	 * Affecte une nouvelle annee
+	 * @param annee nouvelle annee
+	 */
 	/*
 	 * CONVERTI UN STRING EN UN TYPE DATEETHEURE
 	 */
@@ -75,57 +102,108 @@ public class DateEtHeure {
 	{
 		this.annee=annee;
 	}
+	
+	/**
+	 * Affecte un nouveau mois
+	 * @param mois Nouveau mois
+	 */
 	public void setMois(int mois)
 	{
 		this.mois=mois;
 	}
+	/**
+	 * Affecte un nouveau jour
+	 * @param jour Nouveau jour
+	 */
 	public void setJour(int jour)
 	{
 		this.jour=jour;
 	}
+	
+	/**
+	 * Affecte une nouvelle heure
+	 * @param heure Nouvelle heure
+	 */
 	public void setHeure(int heure)
 	{
 		this.heure=heure;
 	}
+	
+	/**
+	 * Affecte une nouvelle minute
+	 * @param minute Nouvelle minute
+	 */
 	public void setMinute(int minute)
 	{
 		this.minute=minute;
 	}
+	
+	/**
+	 * Affecte une nouvelle seconde
+	 * @param seconde Nouvelle seconde
+	 */
 	public void setSeconde(int seconde)
 	{
 		this.seconde=seconde;
 	}
 	
-	
+	/**
+	 * Renvoie l'annee
+	 * @return l'annee
+	 */
 	public int getAnnee ()
 	{
 		return annee;
 	}
 	
+	/**
+	 * Renvoie le mois
+	 * @return le mois
+	 */
 	public int getMois()
 	{
 		return mois;
 	}
 	
+	/**
+	 * Renvoie le jour
+	 * @return Le jour
+	 */
 	public int getJour()
 	{
 		return jour;
 	}
 	
+	/**
+	 * Renvoie l'heure
+	 * @return L'heure
+	 */
 	public int getHeure()
 	{
 		return heure;
 	}
 	
+	/**
+	 * Renvoie la minute
+	 * @return La minute
+	 */
 	public int getMinute()
 	{
 		return minute;
 	}
+	
+	/**
+	 * Renvoie la seconde
+	 * @return La seconde
+	 */
 	public int getSeconde()
 	{
 		return seconde;
 	}
 	
+	/**
+	 * Affiche la date et l'heure dans la console
+	 */
 	public void afficher () {
 		System.out.println("Date: "+jour+"/"+mois+"/"+annee);
 		System.out.println("Heure: "+ heure+":"+minute+":"+seconde);
