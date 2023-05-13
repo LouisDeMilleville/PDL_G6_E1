@@ -30,6 +30,7 @@ public class InterfaceScolarite extends JFrame {
 	private JButton jbGestionNote;
 	private JButton jbGestionAbsence;
 	private JButton jbGestionStatutEcole;
+	private JButton jbCreationCompte;
 	private JButton jbDeconnexion;
 	
 	public InterfaceScolarite(String titre, int width, int height, Scolarite scolarite)
@@ -53,7 +54,7 @@ public class InterfaceScolarite extends JFrame {
 		jpContainer.add(jlMessageFermeture);
 		
 		jpSousContainer = new JPanel();
-		jpSousContainer.setLayout(new GridLayout(4, 2));
+		jpSousContainer.setLayout(new GridLayout(5, 2));
 		
 		jbGestionCours = new JButton();
 		jbGestionCours.setText("gestion des cours");
@@ -85,10 +86,19 @@ public class InterfaceScolarite extends JFrame {
 		jbGestionNote.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionNote);
 		
-		jbGestionStatutEcole = new JButton();
-		jbGestionStatutEcole.setText("Gestion du statut de l'ecole");
-		jbGestionStatutEcole.setHorizontalAlignment(SwingConstants.CENTER);
-		jpSousContainer.add(jbGestionStatutEcole);
+		if(scolarite.getId() == 1)
+		{
+			jbGestionStatutEcole = new JButton();
+			jbGestionStatutEcole.setText("Gestion du statut de l'ecole");
+			jbGestionStatutEcole.setHorizontalAlignment(SwingConstants.CENTER);
+			jpSousContainer.add(jbGestionStatutEcole);
+			
+			jbCreationCompte = new JButton();
+			jbCreationCompte.setText("Creer un compte utilisateur");
+			jbCreationCompte.setHorizontalAlignment(SwingConstants.CENTER);
+			jpSousContainer.add(jbCreationCompte);
+		}
+		
 		
 		jbDeconnexion = new JButton();
 		jbDeconnexion.setText("Deconnexion");
