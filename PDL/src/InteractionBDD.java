@@ -181,6 +181,38 @@ public class InteractionBDD {
 				e.printStackTrace();
 			}
 			break;
+		case 2:
+			try {
+				System.out.println("Insertion compte scolarite");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Scolarite (sco_id, sco_nom, sco_prenom, sco_mail, sco_mdp, sco_estGest) VALUES (?, ?, ?, ?, ?, ?)");
+				System.out.println("Test 1");
+				ps.setInt(1, scolarite.getId());
+				System.out.println("Test 2");
+				ps.setString(2, scolarite.getNom());
+				System.out.println("Test 3");
+				ps.setString(3, scolarite.getPrenom());
+				System.out.println("Test 4");
+				ps.setString(4, scolarite.getMail());
+				System.out.println("Test 5");
+				ps.setString(5, scolarite.getMotDePasse());
+				System.out.println("Test 6");
+				if(scolarite.getGestionnaire())
+				{
+					ps.setInt(6, 1);
+				}
+				else
+				{
+					ps.setInt(6, 0);
+				}
+				System.out.println("Test 7");
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		}
 	}
 	

@@ -299,8 +299,37 @@ public class CreerCompteGUI {
 						clearAll();
 					}
 				}
-				else {
-					typeCompte = 2;
+				else if(chckbxCaseScolarite.isSelected()){
+					InteractionBDD moduleBDD = new InteractionBDD();
+					if(!moduleBDD.idExist(2, Integer.parseInt(textFieldIdentifiant.getText())))
+					{
+						int identifiant = Integer.parseInt(textFieldIdentifiant.getText());
+						System.out.println("Here 1");
+						String nom = textFieldNom.getText().toUpperCase();
+						System.out.println("Here 2");
+						String prenom = textFieldPrenom.getText().toLowerCase();
+						System.out.println("Here 3");
+						String mail = prenom + "."+ nom + "@scolarite.esigelec.fr";
+						System.out.println("Here 4");
+						mail = mail.toLowerCase();
+						System.out.println("Here 5");
+						mail = mail.replace(" ", "");
+						System.out.println("Here 6");
+						String mdp = textFieldMotDePasse.getText();
+						System.out.println("Here 7");
+						boolean estGest = false;
+						if(chckbxCaseGestionnaire.isSelected())
+						{
+							estGest = true;
+						}
+						Scolarite scolarite = new Scolarite(identifiant, nom, prenom, mail, mdp, estGest);
+						System.out.println("Here 11");
+						moduleBDD.insertAccount(2, null, null, scolarite);
+						System.out.println("Here 12");
+						JOptionPane.showMessageDialog(null, "Le compte a ete cree", "Information", JOptionPane.INFORMATION_MESSAGE);
+						System.out.println("Here 13");
+						clearAll();
+					}
 				}
 				
 				
