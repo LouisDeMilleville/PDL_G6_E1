@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -236,31 +237,73 @@ public class CreerCompteGUI {
 				int typeCompte;
 				if(chckbxCaseEtudiant.isSelected())
 				{
-					typeCompte = 0;
+					InteractionBDD moduleBDD = new InteractionBDD();
+					if(!moduleBDD.idExist(0, Integer.parseInt(textFieldIdentifiant.getText())))
+					{
+						int identifiant = Integer.parseInt(textFieldIdentifiant.getText());
+						String nom = textFieldNom.getText().toUpperCase();
+						String prenom = textFieldPrenom.getText().toLowerCase();
+						System.out.println("Prenom : "+prenom);
+						String mail = prenom + "."+ nom + "@groupe-esigelec.org";
+						mail = mail.toLowerCase();
+						mail = mail.replace(" ", "");
+						String mdp = textFieldMotDePasse.getText();
+						String filiere = "";
+						if(selectedIndex == 0)
+						{
+							filiere = "FISE";
+						}
+						if(selectedIndex == 1)
+						{
+							filiere = "FISA";
+						}
+						int annee = Integer.parseInt(textFieldAnnee.getText());
+						Etudiant etudiant = new Etudiant(identifiant, nom, prenom, mail, mdp, filiere, annee);
+						moduleBDD.insertAccount(0, etudiant, null, null);
+						JOptionPane.showMessageDialog(null, "Le compte a ete cree", "Information", JOptionPane.INFORMATION_MESSAGE);
+						clearAll();
+					}
 				}
 				else if(chckbxCaseEnseignant.isSelected())
 				{
-					typeCompte = 1;
+					InteractionBDD moduleBDD = new InteractionBDD();
+					if(!moduleBDD.idExist(0, Integer.parseInt(textFieldIdentifiant.getText())))
+					{
+						int identifiant = Integer.parseInt(textFieldIdentifiant.getText());
+						System.out.println("Here 1");
+						String nom = textFieldNom.getText().toUpperCase();
+						System.out.println("Here 2");
+						String prenom = textFieldPrenom.getText().toLowerCase();
+						System.out.println("Here 3");
+						String mail = prenom + "."+ nom + "@esigelec.fr";
+						System.out.println("Here 4");
+						mail = mail.toLowerCase();
+						System.out.println("Here 5");
+						mail = mail.replace(" ", "");
+						System.out.println("Here 6");
+						String mdp = textFieldMotDePasse.getText();
+						System.out.println("Here 7");
+						String numero = textFieldNumero.getText();
+						System.out.println("Here 8");
+						String matiere = textFieldMatiere.getText();
+						System.out.println("Here 9");
+						Matiere obj = new Matiere(matiere, 1, 1, 1);
+						System.out.println("Here 10");
+						System.out.println(obj.getNom());
+						Enseignant enseignant = new Enseignant(identifiant, nom, prenom, mail, mdp, numero, obj);
+						System.out.println("Here 11");
+						moduleBDD.insertAccount(1, null, enseignant, null);
+						System.out.println("Here 12");
+						JOptionPane.showMessageDialog(null, "Le compte a ete cree", "Information", JOptionPane.INFORMATION_MESSAGE);
+						System.out.println("Here 13");
+						clearAll();
+					}
 				}
 				else {
 					typeCompte = 2;
 				}
 				
-				switch(typeCompte)
-				{
-				case 0:
-					//Verif compte n'existe pas déjà puis insérer
-					break;
-				case 1:
-					//Verif compte n'existe pas déjà puis insérer
-					break;
-				case 2:
-					//Verif compte n'existe pas déjà puis insérer
-					break;
-					default:
-						
-					
-				}
+				
 			}
 		});
 	}

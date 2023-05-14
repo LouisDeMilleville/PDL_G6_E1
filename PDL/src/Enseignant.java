@@ -64,9 +64,14 @@ public class Enseignant extends Compte{
 	 * Renvoie la liste des matieres de l'enseignant
 	 * @return Liste des matieres de l'enseignant
 	 */
-	public ArrayList<Matiere> getMatiere()
+	public ArrayList<Matiere> getListMatiere()
 	{
 		return listeDesMatieres;
+	}
+	
+	public Matiere getMatiere()
+	{
+		return listeDesMatieres.get(0);
 	}
 	
 	/**

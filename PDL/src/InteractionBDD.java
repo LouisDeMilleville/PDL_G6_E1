@@ -65,6 +65,8 @@ public class InteractionBDD {
 	 * @param etudiant L'etudiant dont on souhaite recuperer les absences
 	 * @return La liste des Absences distanciel de l'etudiant
 	 */
+	
+	
 	public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel(Etudiant etudiant)
 	{
 		ArrayList<AbsenceDistanciel> listAbs = new ArrayList<AbsenceDistanciel>();
@@ -123,6 +125,146 @@ public class InteractionBDD {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public void insertAccount(int typeCompte, Etudiant etudiant, Enseignant enseignant, Scolarite scolarite)
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		switch(typeCompte)
+		{
+		case 0:
+			try {
+				System.out.println("Insertion compte etudiant");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Eleve (ele_id, ele_nom, ele_prenom, ele_mail, ele_mdp, ele_filiere, ele_annee) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				ps.setInt(1, etudiant.getId());
+				ps.setString(2, etudiant.getNom());
+				ps.setString(3, etudiant.getPrenom());
+				ps.setString(4, etudiant.getMail());
+				ps.setString(5, etudiant.getMotDePasse());
+				ps.setString(6, etudiant.getFiliere());
+				ps.setInt(7, etudiant.getAnnee());
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			try {
+				System.out.println("Insertion compte enseignant");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Enseignant (ens_id, ens_nom, ens_prenom, ens_mail, ens_mdp, ens_numero, ens_matiere) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				System.out.println("Test 1");
+				ps.setInt(1, enseignant.getId());
+				System.out.println("Test 2");
+				ps.setString(2, enseignant.getNom());
+				System.out.println("Test 3");
+				ps.setString(3, enseignant.getPrenom());
+				System.out.println("Test 4");
+				ps.setString(4, enseignant.getMail());
+				System.out.println("Test 5");
+				ps.setString(5, enseignant.getMotDePasse());
+				System.out.println("Test 6");
+				ps.setString(6, enseignant.getNumero());
+				System.out.println("Test 7");
+				System.out.println("Matiere : "+ enseignant.getMatiere());
+				ps.setString(7, enseignant.getMatiere().getNom());
+				System.out.println("Test 8");
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}
+	}
+	
+	/**
+	 * Vérifie si un compte existe déjà dans la BDD
+	 * @param typeCompte Le type de compte (0 = etudiant, 1 = enseignant, 2 = scolarité)
+	 * @param id L'id du compte dont on souhaite vérifier l'existance
+	 */
+	public boolean idExist(int typeCompte, int id)
+	{
+		
+		boolean returnValue = false;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		switch(typeCompte)
+		{
+		case 0:
+			try {
+				System.out.println("Check compte Etudiant existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Eleve WHERE ele_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			try {
+				System.out.println("Check compte Enseignant existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Enseignant WHERE ens_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			try {
+				System.out.println("Check compte Scolarite existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Scolarite WHERE sco_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			default:
+				returnValue = false;
+		}
+		return returnValue;
 	}
 	
 	/**
