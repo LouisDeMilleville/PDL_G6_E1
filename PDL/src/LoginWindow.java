@@ -47,7 +47,7 @@ public class LoginWindow extends JFrame{
 		jtMotDePasse.setHorizontalAlignment(SwingConstants.CENTER);
 		jlContainer.add(jtMotDePasse);
 		
-		String[] choices = { "Élève", "Enseignant", "Scolarité" };
+		String[] choices = { "Etudiant", "Enseignant", "Scolarite",};
 		menu = new JComboBox<>(choices);
 		menu.addActionListener(e -> {
 	         // Obtention de l'indice du choix sélectionné dans le menu déroulant
@@ -73,17 +73,17 @@ public class LoginWindow extends JFrame{
 						verifId = moduleBDD.verificationConnexion(2, jtIdentifiant.getText(), jtMotDePasse.getText());
 						break;
 					default:
-						System.out.println("Normalement c'est pas censé arriver vu qu'il n'y a que 3 choix possibles mais eclipse va bouder si je le fais pas donc je pose ca là");
+						System.out.println("N'est pas cense arriver car selectedIndex choisi par le menu qui ne dispose que de 3 choix possibles");
 				}
 				
 				if(verifId == true)
 				{
 					System.out.println("Identifiants corrects !");
 					jlMessageBienvenue.setText("Identifiants corrects ! Connexion en cours...");
+					dispose();
 				}
 				else {
-					System.out.println("Bordel ca marche pas");
-					jlMessageBienvenue.setText("Identifiant ou mot de passe incorrect, vérifiez que vous avez sélectionné le bon type de compte");
+					jlMessageBienvenue.setText("Identifiant ou mot de passe incorrect, verifiez que vous avez selectionne le bon type de compte");
 				}
 			}
 		});

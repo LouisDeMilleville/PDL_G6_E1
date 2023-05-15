@@ -1,6 +1,6 @@
 
 
-public class Justificatif extends DateEtHeure{
+/*public class Justificatif extends DateEtHeure{
 		private String typeJustificatif;
 		private DateEtHeure a = new DateEtHeure (1900,1,1,7,0);
 
@@ -23,6 +23,6 @@ public class Justificatif extends DateEtHeure{
 		
 		
 
-	}
+	}*/
 
 
