@@ -207,12 +207,13 @@ import pdl.model.CompteModel;
 				rs = ps.executeQuery();
 				// passe a la premiere (et unique) ligne retournee
 				if (rs.next()) {
-					returnValue = new AbsenceDistancielModel(rs.getInt("identifiant"),
+					returnValue = new AbsenceDistancielModel(rs.getInt("id"),
 	                                             rs.getInt("etatJustificatif"),
 							                     rs.getString("matiere"),
 										         rs.getInt("duree"),
 										         rs.getInt("nbCours"),
 										         rs.getString("typeJustificatif"),
+										         rs.getString("link"),
 										         rs.getInt("annee"),
 					                             rs.getInt("mois"),
                                                  rs.getInt("heure"),
@@ -243,7 +244,7 @@ import pdl.model.CompteModel;
 		 * 
 		 * @return une ArrayList de fournisseur
 		 */
-		public ArrayList<AbsenceDistancielModel> getList() {
+		public ArrayList<AbsenceDistancielModel> getList(int id) {
 
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -259,6 +260,7 @@ import pdl.model.CompteModel;
 				// on execute la requete
 				rs = ps.executeQuery();
 				// on parcourt les lignes du resultat
+				
 				while (rs.next()) {
 					returnValue.add(new AbsenceDistancielModel(rs.getInt("identifiant"),
                             rs.getInt("etatJustificatif"),
@@ -266,10 +268,11 @@ import pdl.model.CompteModel;
 					         rs.getInt("duree"),
 					         rs.getInt("nbCours"),
 					         rs.getString("typeJustificatif"),
+					         rs.getString("link"),
 					         rs.getInt("annee"),
                             rs.getInt("mois"),
                             rs.getInt("heure"),
-                            rs.getInt("minute"), id);
+                            rs.getInt("minute"), id));
 							                     
 				}
 				ps.close();
@@ -309,9 +312,9 @@ import pdl.model.CompteModel;
 			// test du constructeur
 			
 			
-			AbsenceDistancielModel s1 = new AbsenceDistancielModel("finance", 1, "DUPONT", "André", "dupont.andre@mail.com", "mdp");
-			AbsenceDistancielModel s2 = new AbsenceDistancielModel("assurance", 2, "KERMAREC", "Joel", "kermarec.joel@mail.com", "mdp");
-			AbsenceDistancielModel s3 = new AbsenceDistancielModel("medecine", 7, "TIPIAC", "Jeanne", "tipiac.jeanne@mail.com", "mdp");
+			AbsenceDistancielModel s1 = new AbsenceDistancielModel(1, 1, "maths", 2, 2, "maladie", "http//:leCoursDeMaths", 1990, 2, 3, 4, 5);
+			AbsenceDistancielModel s2 = new AbsenceDistancielModel(0, 0, "ats", 1, 4, "maladie", "http//:leCoursDeATS", 1990, 2, 3, 4, 6);
+			AbsenceDistancielModel s3 = new AbsenceDistancielModel(1, 2, "electro", 2, 3, "enterrement", "http//:leCoursDeElectro", 1990, 2, 3, 7, 5);
 			
 			
 			// test de la methode add
@@ -336,8 +339,10 @@ import pdl.model.CompteModel;
 			
 			// test de la methode getList
 			
-			ArrayList<AbsenceDistancielModel> list = absenceDDAO.getList();
+			
+			ArrayList<AbsenceDistancielModel> list = absenceDDAO.getList(1);
 			for (AbsenceDistancielModel ad: list) {
+				
 				// appel explicite de la methode toString de la classe Object (a privilegier)
 				
 				
@@ -352,7 +357,7 @@ import pdl.model.CompteModel;
 			
 			returnValue = 0;
 			for (int id : ids) {
-//				returnValue = eleveDAO.delete(id);
+//				returnValue = absenceDDAO.delete(id);
 				System.out.println(returnValue + " utilisateur supprime");
 			}
 			

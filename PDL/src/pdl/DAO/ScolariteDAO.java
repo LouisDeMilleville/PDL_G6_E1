@@ -41,6 +41,7 @@ public class ScolariteDAO extends ConnectionDAO{
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			
 			ps = connect.prepareStatement("INSERT INTO scolarite(sco_estGest, com_nom, com_prenom, com_mail, com_mdp) VALUES(?, ?, ?, ?)");
+			ps.setInt(1, scolarite.getId());
 			ps.setString(1, scolarite.getNom());
 			ps.setString(2, scolarite.getPrenom());
 			ps.setString(3, scolarite.getMail());
@@ -87,12 +88,13 @@ public class ScolariteDAO extends ConnectionDAO{
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			
 			ps = connect.prepareStatement("UPDATE compte set sco_estGest = ?, com_nom = ?, com_prenom = ?,com_mail = ?, com_mdp = ? WHERE sco_id = ?");
-			ps.setString(1, scolarite.getNom());
-			ps.setString(2, scolarite.getPrenom());
-			ps.setString(3, scolarite.getMail());
-			ps.setString(4, scolarite.getMdp());
-			ps.setBoolean(5, false);
-			ps.setInt(6, scolarite.getId());
+			ps.setInt(1, scolarite.getId());
+			ps.setString(2, scolarite.getNom());
+			ps.setString(3, scolarite.getPrenom());
+			ps.setString(4, scolarite.getMail());
+			ps.setString(5, scolarite.getMdp());
+			ps.setBoolean(6, false);
+			
 			
 
 			// Execution de la requete
@@ -191,12 +193,17 @@ public class ScolariteDAO extends ConnectionDAO{
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new ScolariteModel(rs.getString("nom"),
+				
+				var number = rs.getInt("estGest");
+				boolean bitValue = number == 1;
+				
+				returnValue = new ScolariteModel(bitValue,
+						                   rs.getInt("sco_id"),
+						                   rs.getString("nom"),
 									       rs.getString("prenom"),
 									       rs.getString("mail"),
-									       rs.getString("mdp")
-									       rs.getBoolean("estGest"));
-			}
+									       rs.getString("mdp"));
+				}
 			ps.close();
 		} 
 		
@@ -238,11 +245,15 @@ public class ScolariteDAO extends ConnectionDAO{
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(new ScolariteModel(rs.getString("nom"),
-						                     rs.getString("prenom"),
-						                     rs.getString("mail"),
-						                     rs.getString("mdp"),
-						                     rs.getBoolean(false)));
+				var number = rs.getInt("estGest");
+				boolean bitValue = number == 1;
+				
+				returnValue.add(new ScolariteModel(bitValue,
+		                                  rs.getInt("sco_id"),
+		                                  rs.getString("nom"),
+					                      rs.getString("prenom"),
+					                      rs.getString("mail"),
+					                      rs.getString("mdp")))  ;
 			}
 			ps.close();
 		} 
@@ -281,9 +292,9 @@ public class ScolariteDAO extends ConnectionDAO{
 		// test du constructeur
 		
 		
-		ScolariteModel s1 = new CompteModel("RACHAD", "Yassine", "rachad.yassine@mail.com", "mdp", false);
-		ScolariteModel s2 = new CompteModel("TOURE", "Joanes", "toure.joanes@mail.com", "mdp", false);
-		ScolariteModel s3 = new CompteModel("OBIN", "Kevin", "obin.kevin@mail.com", "mdp", false);
+		ScolariteModel s1 = new ScolariteModel(true, 1,"RACHAD", "Yassine", "rachad.yassine@mail.com", "mdp");
+		ScolariteModel s2 = new ScolariteModel(false, 2,"OBIN", "Kévin", "obin.kevin@mail.com", "mdp");
+		ScolariteModel s3 = new ScolariteModel(true, 3,"KAMAL", "Farah", "kamal.farah@mail.com", "mdp");
 		
 		
 		// test de la methode add

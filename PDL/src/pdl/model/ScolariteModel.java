@@ -6,7 +6,7 @@ public class ScolariteModel  extends CompteModel{
 
 
 	public ScolariteModel(boolean estGestionnaire, int identifiant, String nom, String prenom, String mail, String mdp) {
-		super(identifiant, nom, prenom, mail, mdp);
+		super(nom, prenom, mail, mdp);
 
 		this.estGestionnaire = estGestionnaire;
 	}
