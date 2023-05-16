@@ -15,8 +15,9 @@ public class InterfaceTraitementAbsences extends JFrame{
 	private int type;
 	private ArrayList<AbsenceDistanciel> listAbsDist;
 	private ArrayList<AbsenceEnseignant> listAbsEns;
+	private ArrayList<Justificatifabsence> listJus;
 	private int width;
-	private int listSize;
+	private int listSize,listSize1;
 	
 	private JPanel jpContainer;
 	
@@ -32,6 +33,7 @@ public class InterfaceTraitementAbsences extends JFrame{
 		this.listAbsDist = listAbsDist;
 		this.listAbsEns = listAbsEns;
 		listSize = listAbsDist.size();
+		listSize1=listAbsEns.size();
 		this.width = width;
 		
 		jpContainer = new JPanel();
@@ -148,21 +150,15 @@ public class InterfaceTraitementAbsences extends JFrame{
 		//Traitement des absences d'enseignants
 		if(type == 3)
 		{
-			jpContainer.setLayout(new GridLayout(listAbsDist.size() + 2, 1));
+			jpContainer.setLayout(new GridLayout(listAbsEns.size() + 2, 1));
 			JPanel SousContainer = new JPanel();
-			SousContainer.setLayout(new GridLayout(1, 6));
-			JLabel jlNom = new JLabel("Nom");
-			jlNom.setHorizontalAlignment(SwingConstants.CENTER);
-			SousContainer.add(jlNom);
-			JLabel jlPrenom = new JLabel("Prenom");
-			jlPrenom.setHorizontalAlignment(SwingConstants.CENTER);
-			SousContainer.add(jlPrenom);
+			SousContainer.setLayout(new GridLayout(1, 5));
+			JLabel jlIdenEns = new JLabel("IdenEns");
+			jlIdenEns.setHorizontalAlignment(SwingConstants.CENTER);
+			SousContainer.add(jlIdenEns);
 			JLabel jlMatiere = new JLabel("Matiere");
 			jlMatiere.setHorizontalAlignment(SwingConstants.CENTER);
 			SousContainer.add(jlMatiere);
-			JLabel jlDuree = new JLabel("Duree");
-			jlDuree.setHorizontalAlignment(SwingConstants.CENTER);
-			SousContainer.add(jlDuree);
 			JLabel jlRaison = new JLabel("Raison");
 			jlRaison.setHorizontalAlignment(SwingConstants.CENTER);
 			SousContainer.add(jlRaison);
@@ -170,69 +166,46 @@ public class InterfaceTraitementAbsences extends JFrame{
 			jlValider.setHorizontalAlignment(SwingConstants.CENTER);
 			SousContainer.add(jlValider);
 			jpContainer.add(SousContainer);
-			for(int i = 0 ; i < listAbsDist.size() ; i++)
+			for(int i = 0 ; i < listAbsEns.size() ; i++)
 			{
 				JPanel jpDetails = new JPanel();
 				jpDetails.setLayout(new GridLayout(1, 7));
-				jlNom = new JLabel(listAbsDist.get(i).getNom());
-				jlNom.setHorizontalAlignment(SwingConstants.CENTER);
-				jpDetails.add(jlNom);
-				jlPrenom = new JLabel(listAbsDist.get(i).getPrenom());
-				jlPrenom.setHorizontalAlignment(SwingConstants.CENTER);
-				jpDetails.add(jlPrenom);
-				jlMatiere = new JLabel(listAbsDist.get(i).getMatiere());
+				jlIdenEns = new JLabel(""+listAbsEns.get(i).getIdEns());
+				jlIdenEns.setHorizontalAlignment(SwingConstants.CENTER);
+				jpDetails.add(jlIdenEns);
+				
+				jlMatiere = new JLabel(listAbsEns.get(i).getMatiere());
 				jlMatiere.setHorizontalAlignment(SwingConstants.CENTER);
 				jpDetails.add(jlMatiere);
-				jlDuree = new JLabel(""+listAbsDist.get(i).getDuree());
-				jlDuree.setHorizontalAlignment(SwingConstants.CENTER);
-				jpDetails.add(jlDuree);
-				jlRaison = new JLabel(listAbsDist.get(i).getJustificatif());
+				jlRaison = new JLabel(listAbsEns.get(i).getRaison());
 				jlRaison.setHorizontalAlignment(SwingConstants.CENTER);
 				jpDetails.add(jlRaison);
 				JButton jbValider = new JButton("Valider");
 				jbValider.setHorizontalAlignment(SwingConstants.CENTER);
 				jpDetails.add(jbValider);
 				final int j = i;
-				JButton jbRefuser = new JButton("Refuser");
+				/*JButton jbRefuser = new JButton("Refuser");
 				jbRefuser.setHorizontalAlignment(SwingConstants.CENTER);
-				jpDetails.add(jbRefuser);
+				jpDetails.add(jbRefuser);*/
 				jbValider.addActionListener(new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// Ajouter requete pour valider l'absence en prenant en compte l'id de l'absence
 						InteractionBDD moduleBDD = new InteractionBDD();
-						int id = listAbsDist.get(j).getId();
-						//listAbsDist.remove(j);
-						listSize--;
-						System.out.println("Id abs = "+ id);
-						moduleBDD.validerAbsenceDist(id);
+						int nom = listAbsEns.get(j).getIdEns();
+						listAbsEns.remove(j);
+						listSize1--;
+						System.out.println("Nom prof absent = "+ nom);
+						moduleBDD.validerAbsenceEns(nom);
 						jbValider.setVisible(false);
-						jbRefuser.setVisible(false);
+						//jbRefuser.setVisible(false);
 						jpContainer.remove(jpDetails);
-						jpContainer.setLayout(new GridLayout(listSize + 2, 1));
-						refreshWindow();
+						jpContainer.setLayout(new GridLayout(listSize1 + 2, 1));
+						//refreshWindow();
 					}
 				});
-				jbRefuser.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// Ajouter requete pour refuser l'absence en prenant en compte l'id de l'absence
-						InteractionBDD moduleBDD = new InteractionBDD();
-						int id = listAbsDist.get(j).getId();
-						//listAbsDist.remove(j);
-						listSize--;
-						System.out.println("Id abs = "+ id);
-						moduleBDD.refuserAbsenceDist(id);
-						jbValider.setVisible(false);
-						jbRefuser.setVisible(false);
-						jpContainer.remove(jpDetails);
-						jpContainer.setLayout(new GridLayout(listSize + 2, 1));
-						refreshWindow();
-						
-					}
-				});
+				
 				
 				jpContainer.add(jpDetails);
 			}

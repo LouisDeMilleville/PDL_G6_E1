@@ -14,15 +14,27 @@ public class AbsenceEnseignant {
 	private DateEtHeure debut;
 	private DateEtHeure fin;
 	private String raison;
+	private String matiere;
+	private String prenom;
+	private String nom;
 	
 	
-	public AbsenceEnseignant(int idAbs, int idEns, DateEtHeure debut, DateEtHeure fin, String raison)
+	public AbsenceEnseignant(int idAbs, int idEns, DateEtHeure debut, DateEtHeure fin, String raison,String matiere)
 	{
 		this.idAbs=idAbs;
 		this.idEns=idEns;
 		this.debut=debut;
 		this.fin=fin;
 		this.raison=raison;
+		this.matiere=matiere;
+	}
+	public AbsenceEnseignant(int idEns, String prenom, String nom, String raison,String matiere)
+	{
+		this.idEns=idEns;
+		this.prenom=prenom;
+		this.nom=nom;
+		this.raison=raison;
+		this.matiere=matiere;
 	}
 	
 	/**
@@ -51,6 +63,14 @@ public class AbsenceEnseignant {
 	{
 		this.raison=raison;
 	}
+	public void setIdAbs(int idAbs)
+	{
+		this.idAbs=idAbs;
+	}
+	public void setMatiere(String matiere)
+	{
+		this.matiere=matiere;
+	}
 	
 	/**
 	 * Affecte un nouvel id d'enseignant absent
@@ -77,6 +97,14 @@ public class AbsenceEnseignant {
 	public int getIdEns()
 	{
 		return idEns;
+	}
+	public String getNom()
+	{
+		return nom;
+	}
+	public String getPrenom()
+	{
+		return prenom;
 	}
 	
 	/**
@@ -105,12 +133,15 @@ public class AbsenceEnseignant {
 	{
 		return raison;
 	}
-	
+	public String getMatiere()
+	{
+		return matiere;
+	}
 	/**
 	 * Affiche les détails de l'absence dans la console
 	 */
 	public void display() {
-		System.out.println("L'absence durera du"+debut+ "au" +fin+  " et a pour id" +idAbs+ ".L'identifiant du professeur est" +idEns+ " et la raison de son absence est " +raison);
+		System.out.println("L'absence durera du"+debut+ "au" +fin+  " et a pour id" +idAbs+ ".L'identifiant du professeur est" +idEns+ " et la raison de son absence est " +raison+ "au cours "+matiere);
 	}
 }
 

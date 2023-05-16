@@ -25,6 +25,7 @@ public class Enseignant extends Compte{
 		listeDesMatieres.add(matiere);
 	}
 	
+	
 	public String getNumero()
 	{
 		return numero;

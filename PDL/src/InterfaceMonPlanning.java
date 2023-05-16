@@ -42,7 +42,7 @@ import com.toedter.calendar.JDateChooser;
 		
 		public InterfaceMonPlanning(String titre, int width, int height, Enseignant enseignant)
 		{
-			this.setTitle(titre);
+			/*this.setTitle(titre);
 			this.setSize(485, 204);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			Panel Calen = new Panel();
@@ -50,7 +50,7 @@ import com.toedter.calendar.JDateChooser;
 	        jpContainer.setLayout(null);
 	       JCalendar calendar = new JCalendar();
 	       Calen.add(calendar);
-	       jpContainer.add(Calen);
+	       jpContainer.add(Calen);*/
 	       
 	        /*JDateChooser dateChooser = new JDateChooser();
 	        dateChooser.setBounds(46, 39, 189, 91);

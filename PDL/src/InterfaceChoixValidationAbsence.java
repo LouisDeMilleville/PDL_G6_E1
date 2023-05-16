@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 public class InterfaceChoixValidationAbsence extends JFrame{
 	
 	private Scolarite scolarite;
-	
+	private ArrayList<AbsenceEnseignant> listAbsEns;
 	private JPanel jpContainer;
 	private JButton jbAbsencesNormales;
 	private JButton jbAbsencesDistanciel;
@@ -91,7 +91,10 @@ public class InterfaceChoixValidationAbsence extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				InteractionBDD moduleBDD = new InteractionBDD();
+				ArrayList<AbsenceEnseignant> listAbsEns = moduleBDD.getListAbsenceEnseignant();
+				new InterfaceTraitementAbsences("EsigServices", 1200, 800, scolarite, 3, null, listAbsEns);
+				dispose();
 			}
 		});
 		
