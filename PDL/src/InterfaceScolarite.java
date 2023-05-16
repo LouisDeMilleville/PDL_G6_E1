@@ -65,7 +65,7 @@ public class InterfaceScolarite extends JFrame {
 		
 		
 		jbGestionCours = new JButton();
-		jbGestionCours.setText("gestion des cours");
+		jbGestionCours.setText("Gestion des cours");
 		jbGestionCours.setHorizontalAlignment(SwingConstants.CENTER);
 		jpSousContainer.add(jbGestionCours);
 		

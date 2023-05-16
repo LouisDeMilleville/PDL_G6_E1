@@ -42,6 +42,9 @@ public class InterfaceSaisieAbsenceEnseignant extends JFrame{
 	private JPanel jpContainerRaison;
 	private JLabel jlMessageRaison;
 	private JTextField jtSaisieRaison;
+	private JPanel jpContainerMatiere;
+	private JLabel jlMessageMatiere;
+	private JTextField jtSaisieMatiere;
 	private JPanel jpContainerBoutons;
 	private JButton jbRetour;
 	private JButton jbInsertionAbsence;
@@ -118,6 +121,20 @@ public class InterfaceSaisieAbsenceEnseignant extends JFrame{
         
         jpContainer.add(jpContainerRaison);
         
+        jpContainerMatiere = new JPanel();
+		jpContainerMatiere.setLayout(new GridLayout(1, 2));
+		
+		jlMessageMatiere = new JLabel();
+		jlMessageMatiere.setText("Matiere concernee par l'absence :");
+		jlMessageMatiere.setHorizontalAlignment(SwingConstants.CENTER);
+		jpContainerMatiere.add(jlMessageMatiere);
+		
+		jtSaisieMatiere = new JTextField();
+		jtSaisieMatiere.setText("Saisissez votre matiere");
+		jtSaisieMatiere.setHorizontalAlignment(SwingConstants.CENTER);
+		jpContainerMatiere.add(jtSaisieMatiere);
+        
+        jpContainer.add(jpContainerMatiere);
 
         
         jpContainerBoutons = new JPanel();
@@ -163,7 +180,7 @@ jbInsertionAbsence.addActionListener(new ActionListener() {
 		        DateEtHeure date2=new DateEtHeure (0,0,0);
 		        DateEtHeure dateDebutAbs = new DateEtHeure (0,0,0);
 		        
-		        AbsenceEnseignant absEns = new AbsenceEnseignant (0,0,date1,date2,"Raison");
+		        AbsenceEnseignant absEns = new AbsenceEnseignant (0,0,date1,date2,"Raison","mATIERE");
 		        absEns.setIdEns(enseignant.getId());
 		        String dateDebut = jfSaisieDebut.getText();
 		        String dateDebutSplit[]=dateDebut.split("/");
@@ -180,7 +197,7 @@ jbInsertionAbsence.addActionListener(new ActionListener() {
 		        dateDebutAbs.setJour(j);
 		        dateDebutAbs.setMois(m);
 		        
-		        absEns.setDebut(dateDebutAbs);
+		       absEns.setDebut(dateDebutAbs);
 		        System.out.println(dateDebutAbs);
 		        DateEtHeure dateFinAbs = new DateEtHeure (0,0,0);
 		        String dateFin = jfSaisieFin.getText();
@@ -197,11 +214,13 @@ jbInsertionAbsence.addActionListener(new ActionListener() {
 		        
 		       
 		        absEns.setRaison(jtSaisieRaison.getText());
-		        
+		        absEns.setMatiere(jtSaisieMatiere.getText());
 		        
 				absEns.display();
 				
 				moduleBDD.addAbsenceEnseignant(absEns);
+				new InterfaceSaisieAbsenceEnseignant("EsigServices", 800, 800, enseignant);
+				
 			}
 			
 		});

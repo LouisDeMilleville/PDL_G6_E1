@@ -50,7 +50,7 @@ public class Enseignant extends Compte{
 		this.numero=numero;
 		listeDesMatieres.add(matiere);
 	}
-	
+
 	/**
 	 * Renvoie le numero de telephone de l'enseignant
 	 * @return Numero de telephone

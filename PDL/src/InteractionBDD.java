@@ -359,7 +359,8 @@ public class InteractionBDD {
 				String abs_ensf=rs.getString("abs_ens_fin");
 				DateEtHeure abs_ens_fin = DateEtHeure.toDate(abs_ensf);
 				String abs_ens_raison= rs.getString("abs_ens_raison");
-				AbsenceEnseignant absEns = new AbsenceEnseignant(abs_ens_id, abs_ens_id_ens, abs_ens_debut, abs_ens_fin, abs_ens_raison);
+				String mat_ens= rs.getString("mat_ens");
+				AbsenceEnseignant absEns = new AbsenceEnseignant(abs_ens_id, abs_ens_id_ens, abs_ens_debut, abs_ens_fin, abs_ens_raison,mat_ens);
 				listAbs.add(absEns);
 			}
 			
@@ -710,12 +711,13 @@ public class InteractionBDD {
 		 Date date2= sdf.parse(deh2.getJour()+"/"+deh2.getMois()+"/"+deh2.getAnnee());
 		 java.sql.Date dates2= new java.sql.Date(date2.getTime());
 		 
-		 ps = con.prepareStatement("INSERT INTO AbsenceEnseignant ( abs_ens_id, abs_ens_id_ens ,  abs_ens_debut, abs_ens_fin, abs_ens_raison  ) VALUES (?, ?, ?, ?,?)");
+		 ps = con.prepareStatement("INSERT INTO AbsenceEnseignant ( abs_ens_id, abs_ens_id_ens ,  abs_ens_debut, abs_ens_fin, abs_ens_raison,mat_ens  ) VALUES (?, ?, ?, ?,?,?)");
 		 ps.setInt(1, absEnsei.getIdAbs());
 		 ps.setInt(2, absEnsei.getIdEns());
 		 ps.setDate(3,dates );
 		 ps.setDate(4, dates2);
 		 ps.setString(5, absEnsei.getRaison());
+		 ps.setString(6, absEnsei.getMatiere());
 		
 		 
 		 // Execution de la requete
@@ -1055,6 +1057,44 @@ public class InteractionBDD {
     	 return returnValue;
     	 
      }
+     public ArrayList<AbsenceEnseignant> getListAbsenceEnseignant()
+     {
+    	 ArrayList<AbsenceEnseignant> returnValue1 = new ArrayList<>();
+    	 Connection con = null;
+ 		 PreparedStatement ps = null;
+ 		 ResultSet rs = null;
+ 		 try {
+ 			System.out.println("Recuperation des absences enseignant non validee");
+ 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+ 			ps = con.prepareStatement("SELECT abs_ens_id_ens,abs_ens_raison,mat_ens, ens_nom, ens_prenom FROM AbsenceEnseignant INNER JOIN Enseignant ON ens_id = AbsenceEnseignant.abs_ens_id_ens ");
+ 			System.out.println("Here 1");
+ 			rs = ps.executeQuery();
+ 			while(rs.next())
+ 			{
+ 				int idAbsEns = Integer.parseInt(rs.getString("abs_ens_id_ens"));
+ 				System.out.println("Here 2");
+ 				String justificatif = rs.getString("abs_ens_raison");
+ 				System.out.println("Here 4");
+ 				String matiere = rs.getString("mat_ens");
+ 				System.out.println("Here 5");
+ 				String nom = rs.getString("ens_nom");
+ 				System.out.println("Here 6");
+ 				String prenom = rs.getString("ens_prenom");
+ 				System.out.println("Here 7");
+ 				AbsenceEnseignant absEnsei = new AbsenceEnseignant(idAbsEns,prenom,nom,justificatif, matiere);
+ 				returnValue1.add(absEnsei);
+ 			}
+ 			System.out.println("On a : "+ returnValue1.size());
+ 			return returnValue1;
+ 		 } catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		 }
+    	 
+    	 
+    	 return returnValue1;
+    	 
+     }
      
      /**
       * Valide une absence distanciel
@@ -1072,6 +1112,30 @@ public class InteractionBDD {
  			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
  			ps = con.prepareStatement("UPDATE AbsenceDistanciel SET abs_dist_etat_justif = 1 WHERE abs_dist_id = ?");
  			ps.setInt(1, idAbsDist);
+ 			rs = ps.executeQuery();
+ 			System.out.println("Absence validee");
+ 			
+ 		} catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
+     
+     public void validerAbsenceEns(int IdEns)
+ 	{
+ 		Connection con = null;
+ 		PreparedStatement ps = null;
+ 		ResultSet rs = null;
+ 		
+ 		try {
+ 			String justif="JUSTIFIÉ";
+ 			System.out.println("Validation de l'absence...");
+ 			con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+ 			ps = con.prepareStatement("SELECT ens_nom FROM Enseignant INNER JOIN Justificatif ON just_nom_compte=ens_nom WHERE just_id=");
+ 			ps.setInt(1,IdEns);
+ 			String nomEnsei=rs.getString("ens_nom");
+ 			ps = con.prepareStatement("UPDATE Justificatif SET just_type_justificatif = ? WHERE just_nom_compte=nomEnsei");
+ 			ps.setString(1, justif);
  			rs = ps.executeQuery();
  			System.out.println("Absence validee");
  			
