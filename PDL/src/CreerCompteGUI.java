@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
+/**
+ * Cette classe représente l'interface permettant de créer des comptes utilisateur
+ * @author Equipe PDL Groupe 6 Equipe 1
+ *
+ */
 public class CreerCompteGUI {
 	
 	private int selectedIndex;
@@ -185,10 +190,9 @@ public class CreerCompteGUI {
 		btnBoutonCreer.setBounds(262, 259, 186, 45);
 		frame.getContentPane().add(btnBoutonCreer);
 		
-		if(scolarite.getGestionnaire())
-		{
-			
-		}
+		/**
+		 * Creation des listener pour faire fonctionner les boutons
+		 */
 		chckbxCaseEtudiant.addActionListener(new ActionListener() {
 			
 			@Override
