@@ -11,6 +11,13 @@ import javax.swing.SwingConstants;
 
 public class InterfaceTraitementAbsences extends JFrame{
 	
+	/**
+	 * Cette classe est l'interface qui permet a la scolarite de traiter differents types d'absences
+	 * @author Equipe 1 groupe 6
+	 * 
+	 * @version 1.0
+	 *
+	 */
 	private Scolarite scolarite;
 	private int type;
 	private ArrayList<AbsenceDistanciel> listAbsDist;

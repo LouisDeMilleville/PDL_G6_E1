@@ -7,6 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface qui permet à un eleve de choisir s'il souhaite consulter ses absences distanciel ou en saisir une nouvelle
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceMenuAbsenceDistanciel extends JFrame {
 	
 	private Etudiant etudiant;

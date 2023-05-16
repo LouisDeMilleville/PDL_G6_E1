@@ -8,6 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Cette classe est l'interface qui permet a la scolarite de choisir quel type d'absence traiter
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceChoixValidationAbsence extends JFrame{
 	
 	private Scolarite scolarite;
@@ -19,7 +26,13 @@ public class InterfaceChoixValidationAbsence extends JFrame{
 	private JButton jbDeconnexion;
 
 	
-	
+	/**
+	 * Constructeur de la fenetre
+	 * @param titre
+	 * @param width
+	 * @param height
+	 * @param scolarite
+	 */
 	public InterfaceChoixValidationAbsence(String titre, int width, int height, Scolarite scolarite)
 	{
 		this.setTitle(titre);
@@ -54,6 +67,7 @@ public class InterfaceChoixValidationAbsence extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
+		//Ajout des listener sur les differents boutons
 		jbDeconnexion.addActionListener(new ActionListener() {
 			
 			@Override

@@ -21,6 +21,13 @@ import java.util.Date;
 
 import javax.swing.*;
 
+/**
+ * Cette classe est une interface qui permet de saisir une absence enseignant
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
 public class InterfaceSaisieAbsenceEnseignant extends JFrame{
 	
 	private Enseignant enseignant;

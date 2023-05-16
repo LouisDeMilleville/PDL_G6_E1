@@ -8,6 +8,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Cette classe permet d'interagir avec la BDD depuis le programme
+ * @author Equipe 1 groupe 6
+ * 
+ * @version 1.0
+ *
+ */
+
 public class InteractionBDD {
 
 	// À utiliser si sur une machine de l'école :
@@ -52,6 +60,13 @@ public class InteractionBDD {
 		}
 	}
 	
+	/**
+	 * Renvoie la liste des AbsenceDistanciel d'un etudiant
+	 * @param etudiant L'etudiant dont on souhaite recuperer les absences
+	 * @return La liste des Absences distanciel de l'etudiant
+	 */
+	
+	
 	public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel(Etudiant etudiant)
 	{
 		ArrayList<AbsenceDistanciel> listAbs = new ArrayList<AbsenceDistanciel>();
@@ -84,6 +99,10 @@ public class InteractionBDD {
 		return listAbs;
 	}
 	
+	/**
+	 * Retourne le nombre d'absences distanciel dans la BDD
+	 * @return Nombre d'absences distanciel
+	 */
 	public int getCountAbsenceDistanciel()
 	{
 		Connection con = null;
@@ -108,6 +127,187 @@ public class InteractionBDD {
 		return 0;
 	}
 	
+	public void insertAccount(int typeCompte, Etudiant etudiant, Enseignant enseignant, Scolarite scolarite)
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		switch(typeCompte)
+		{
+		case 0:
+			try {
+				System.out.println("Insertion compte etudiant");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Eleve (ele_id, ele_nom, ele_prenom, ele_mail, ele_mdp, ele_filiere, ele_annee) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				ps.setInt(1, etudiant.getId());
+				ps.setString(2, etudiant.getNom());
+				ps.setString(3, etudiant.getPrenom());
+				ps.setString(4, etudiant.getMail());
+				ps.setString(5, etudiant.getMotDePasse());
+				ps.setString(6, etudiant.getFiliere());
+				ps.setInt(7, etudiant.getAnnee());
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			try {
+				System.out.println("Insertion compte enseignant");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Enseignant (ens_id, ens_nom, ens_prenom, ens_mail, ens_mdp, ens_numero, ens_matiere) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				System.out.println("Test 1");
+				ps.setInt(1, enseignant.getId());
+				System.out.println("Test 2");
+				ps.setString(2, enseignant.getNom());
+				System.out.println("Test 3");
+				ps.setString(3, enseignant.getPrenom());
+				System.out.println("Test 4");
+				ps.setString(4, enseignant.getMail());
+				System.out.println("Test 5");
+				ps.setString(5, enseignant.getMotDePasse());
+				System.out.println("Test 6");
+				ps.setString(6, enseignant.getNumero());
+				System.out.println("Test 7");
+				System.out.println("Matiere : "+ enseignant.getMatiere());
+				ps.setString(7, enseignant.getMatiere().getNom());
+				System.out.println("Test 8");
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			try {
+				System.out.println("Insertion compte scolarite");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("INSERT INTO Scolarite (sco_id, sco_nom, sco_prenom, sco_mail, sco_mdp, sco_estGest) VALUES (?, ?, ?, ?, ?, ?)");
+				System.out.println("Test 1");
+				ps.setInt(1, scolarite.getId());
+				System.out.println("Test 2");
+				ps.setString(2, scolarite.getNom());
+				System.out.println("Test 3");
+				ps.setString(3, scolarite.getPrenom());
+				System.out.println("Test 4");
+				ps.setString(4, scolarite.getMail());
+				System.out.println("Test 5");
+				ps.setString(5, scolarite.getMotDePasse());
+				System.out.println("Test 6");
+				if(scolarite.getGestionnaire())
+				{
+					ps.setInt(6, 1);
+				}
+				else
+				{
+					ps.setInt(6, 0);
+				}
+				System.out.println("Test 7");
+				rs = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}
+	}
+	
+	/**
+	 * Vérifie si un compte existe déjà dans la BDD
+	 * @param typeCompte Le type de compte (0 = etudiant, 1 = enseignant, 2 = scolarité)
+	 * @param id L'id du compte dont on souhaite vérifier l'existance
+	 */
+	public boolean idExist(int typeCompte, int id)
+	{
+		
+		boolean returnValue = false;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		switch(typeCompte)
+		{
+		case 0:
+			try {
+				System.out.println("Check compte Etudiant existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Eleve WHERE ele_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			try {
+				System.out.println("Check compte Enseignant existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Enseignant WHERE ens_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			try {
+				System.out.println("Check compte Scolarite existe");
+				con = DriverManager.getConnection(URL_BDD, LOGIN_BDD, PASS_BDD);
+				ps = con.prepareStatement("SELECT * FROM Scolarite WHERE sco_id = ?");
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					returnValue = true;
+				}
+				else
+				{
+					returnValue = false;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			default:
+				returnValue = false;
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Insere une nouvelle absence distanciel dans la BDD
+	 * @param idAbs Id de la nouvelle absence
+	 * @param idEle Id de l'eleve absent
+	 * @param duree Duree de l'absence
+	 * @param raison Raison de l'absence
+	 * @param etat Etat de validation de l'absence
+	 * @param matiere Matiere de l'absence
+	 */
 	public void insertAbsenceDistanciel(int idAbs, int idEle, int duree, String raison, int etat, String matiere)
 	{
 		Connection con = null;
@@ -134,6 +334,10 @@ public class InteractionBDD {
 		}
 	}
 	
+	/**
+	 * Renvoie le debut d'une période de fermeture
+	 * @return DateEtHeure de debut d'une periode de fermeture
+	 */
 	public ArrayList<AbsenceEnseignant> getListAbsenceEnseignant(Enseignant enseignant)
 	{
 		ArrayList<AbsenceEnseignant> listAbs = new ArrayList<AbsenceEnseignant>();
@@ -256,11 +460,22 @@ public class InteractionBDD {
 		return debut_fermeture;
 	}
 	
+	/**
+	 * Renvoie la fin d'une période de fermeture
+	 * @return DateEtHeure de fin d'une periode de fermeture
+	 */
 	public DateEtHeure getFinFermeture() { //Methode pour recup la fin d'une période de fermeture, à modifier
 		DateEtHeure fin_fermeture = new DateEtHeure(2023, 03, 28, 18, 00,00);
 		return fin_fermeture;
 	}
 	
+	/**
+	 * Dit si les identifiants rentrés sont correct ou non
+	 * @param type Type du compte qui essaye de se connecter
+	 * @param Identifiant L'identifiant du compte
+	 * @param MotDePasse Le mot de passe du compte
+	 * @return Un boolean qui indique si le combo identifiant / mot de passe est correct pour le type de compte choisi
+	 */
 	public boolean verificationConnexion(int type, String Identifiant, String MotDePasse) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -354,6 +569,10 @@ public class InteractionBDD {
 					mdp = rs.getString("ens_mdp");
 					numero = rs.getString("ens_numero");
 					matiere = rs.getString("ens_matiere");
+					
+					//Adapter pour passer ca en array list et recuperer les details de la matiere en question
+					//Les masses horaires ci-dessous sont arbitraires et ne correspondent pas necessairement à la réalité
+					Matiere mat_obj = new Matiere(matiere, 10, 10, 10);
 				
 					
 					System.out.println("Identifiant : "+ identifiant);
@@ -363,7 +582,7 @@ public class InteractionBDD {
 					System.out.println("Numero : "+ numero);
 					System.out.println("Matiere : "+matiere);
 					
-					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, matiere);
+					Enseignant enseignant = new Enseignant(Integer.parseInt(identifiant), nom, prenom, mail, mdp, numero, mat_obj);
 					
 					InterfaceEnseignant inter = new InterfaceEnseignant("EsigServices", 800, 800, enseignant);
 				}
@@ -466,6 +685,11 @@ public class InteractionBDD {
 		return returnValue;
 	}
   
+	/**
+	 * Insere une nouvelle absence enseignant dans la BDD
+	 * @param absEnsei Absence à inserer
+	 * @return
+	 */
   public int addAbsenceEnseignant(AbsenceEnseignant absEnsei) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
@@ -523,6 +747,7 @@ public class InteractionBDD {
 		 return returnValue;
 		 }
      
+ 
      public int addJustificatifProf(Justificatifabsence justifProf) {
 		 Connection con = null;
 		 PreparedStatement ps = null;
@@ -788,6 +1013,10 @@ public class InteractionBDD {
      }
     	 
      
+     /**
+      * Renvoie la liste des absences distanciel non traitees par la scolarite (où l'etat de validation vaut 0)
+      * @return La liste des absences distanciel non traitees
+      */
      public ArrayList<AbsenceDistanciel> getListAbsenceDistanciel()
      {
     	 ArrayList<AbsenceDistanciel> returnValue = new ArrayList<>();
@@ -867,6 +1096,10 @@ public class InteractionBDD {
     	 
      }
      
+     /**
+      * Valide une absence distanciel
+      * @param idAbsDist Id de l'absence distanciel à valider
+      */
      public void validerAbsenceDist(int idAbsDist)
  	{
  		Connection con = null;
@@ -887,7 +1120,6 @@ public class InteractionBDD {
  			e.printStackTrace();
  		}
  	}
-     
      
      public void validerAbsenceEns(int IdEns)
  	{
@@ -913,6 +1145,10 @@ public class InteractionBDD {
  		}
  	}
      
+     /**
+      * Refuse une absence distanciel
+      * @param idAbsDist Id de l'absence distanciel à refuser
+      */
      public void refuserAbsenceDist(int idAbsDist)
   	 {
   		Connection con = null;
