@@ -73,6 +73,22 @@ import com.toedter.calendar.JDateChooser;
 			
 	       this.setContentPane(jpContainer);
 	        this.setLocationRelativeTo(null);
+	        GridBagLayout gridBagLayout = new GridBagLayout();
+	        gridBagLayout.columnWidths = new int[]{0, 0, 0};
+	        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
+	        gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+	        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+	        getContentPane().setLayout(gridBagLayout);
+	        
+	        JMonthChooser monthChooser = new JMonthChooser();
+	        GridBagConstraints gbc_monthChooser = new GridBagConstraints();
+	        gbc_monthChooser.fill = GridBagConstraints.BOTH;
+	        gbc_monthChooser.gridx = 1;
+	        gbc_monthChooser.gridy = 3;
+	        getContentPane().add(monthChooser, gbc_monthChooser);
+	        
+	        JDayChooser dayChooser_1 = new JDayChooser();
+	        monthChooser.add(dayChooser_1, BorderLayout.CENTER);
 			this.setVisible(true);
 			
 			    
