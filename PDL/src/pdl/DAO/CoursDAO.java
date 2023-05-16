@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import pdl.model.CompteModel;
@@ -206,6 +208,7 @@ public class CoursDAO  extends ConnectionDAO{
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
 				returnValue = new CoursModel(rs.getInt("num_cours"),
+						                     rs.getDate("laDate"),
                                              rs.getString("matiere"),
 						                     rs.getInt("duree"),
 									         rs.getString("salle"),
@@ -256,6 +259,7 @@ public class CoursDAO  extends ConnectionDAO{
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
 				returnValue.add(new CoursModel(rs.getInt("num_cours"),
+						                       rs.getDate("laDate"),
                                                rs.getString("matiere"),
 	                                           rs.getInt("duree"),
 				                               rs.getString("salle"),
@@ -287,9 +291,10 @@ public class CoursDAO  extends ConnectionDAO{
 	 * 
 	 * @param args non utilisés
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
+	 * @throws ParseException 
 	 */
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, ParseException {
 		int returnValue;
 		
 		CoursDAO coursDAO = new CoursDAO();
@@ -300,10 +305,16 @@ public class CoursDAO  extends ConnectionDAO{
 		
 		// test du constructeur
 		
+		String laDate = "10/05/2023";
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 		
-		CoursModel s1 = new CoursModel(1, "maths", 1, "charpak", 1, 1, 1);
-		CoursModel s2 = new CoursModel(1, "ATS", 1, "charliat", 1, 1, 1);
-		CoursModel s3 = new CoursModel(1, "java", 1, "D1430", 1, 1, 1);
+		java.util.Date date1 = sdf.parse(laDate);
+		
+		
+		CoursModel s1 = new CoursModel(1,date1, "maths", 1, "charpak", 1, 1, 1);
+		CoursModel s2 = new CoursModel(1, date1, "ATS", 1, "charliat", 1, 1, 1);
+		CoursModel s3 = new CoursModel(1, date1, "java", 1, "D1430", 1, 1, 1);
 		
 		
 		// test de la methode add
