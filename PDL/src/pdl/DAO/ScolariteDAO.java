@@ -88,12 +88,18 @@ public class ScolariteDAO extends ConnectionDAO{
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			
 			ps = connect.prepareStatement("UPDATE compte set sco_estGest = ?, com_nom = ?, com_prenom = ?,com_mail = ?, com_mdp = ? WHERE sco_id = ?");
-			ps.setInt(1, scolarite.getId());
+			if(scolarite.getGestionnaire())
+			{
+				ps.setInt(1, 1);
+			}
+			else {
+				ps.setInt(1, 0);
+			}
 			ps.setString(2, scolarite.getNom());
 			ps.setString(3, scolarite.getPrenom());
 			ps.setString(4, scolarite.getMail());
 			ps.setString(5, scolarite.getMdp());
-			ps.setBoolean(6, false);
+			ps.setInt(6, scolarite.getId());
 			
 			
 

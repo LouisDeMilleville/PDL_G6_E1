@@ -2,6 +2,7 @@ package pdl.DAO;
 
 
 import java.sql.DriverManager;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,14 +48,15 @@ public class CoursDAO  extends ConnectionDAO{
 			
 			ps = connect.prepareStatement("INSERT INTO cours(cou_num_cours, cou_matiere, cou_duree, cou_salle, cou_type, cou_id_ens, cou_id_ens_remp, cou_id_grp, cou_absent) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, cours.getNumCours());
-			ps.setString(2, cours.getMatiere());
-			ps.setInt(3, cours.getDuree());
-			ps.setString(4,cours.getSalle());
-			ps.setInt(5, cours.getTypeCours());
-			ps.setInt(6, cours.getEns());
-			ps.setInt(7, cours.getGrp());
-			ps.setInt(8, cours.getRemp());
-			ps.setBoolean(9,cours.getAbsent());
+			ps.setDate(2, java.sql.Date.valueOf(cours.getLaDate().toString()));
+			ps.setString(3, cours.getMatiere());
+			ps.setInt(4, cours.getDuree());
+			ps.setString(5,cours.getSalle());
+			ps.setInt(6, cours.getTypeCours());
+			ps.setInt(7, cours.getEns());
+			ps.setInt(8, cours.getGrp());
+			ps.setInt(9, cours.getRemp());
+			ps.setBoolean(10,cours.getAbsent());
 
 			// Execution de la requete
 			
@@ -97,9 +99,10 @@ public class CoursDAO  extends ConnectionDAO{
 			
 			ps = connect.prepareStatement("UPDATE eleve set cou_num_cours = ?, cou_matiere = ?,cou_duree = ?, cou_salle= ?, cou_type = ?, cou_id_ens = ?, cou_id_ens_remp = ?, cou_id_grp = ?, cou_id_abs = ? WHERE cou_num_cours = ?");
 			ps.setInt(1, cours.getNumCours());
-			ps.setString(2, cours.getMatiere());
-			ps.setInt(3, cours.getDuree());
-			ps.setString(4,cours.getSalle());
+			ps.setDate(2, java.sql.Date.valueOf(cours.getLaDate().toString()));
+			ps.setString(3, cours.getMatiere());
+			ps.setInt(4, cours.getDuree());
+			ps.setString(5,cours.getSalle());
 			ps.setInt(5, cours.getTypeCours());
 			ps.setInt(6, cours.getEns());
 			ps.setInt(7, cours.getGrp());
